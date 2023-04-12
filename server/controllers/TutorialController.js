@@ -1,14 +1,17 @@
+const { Op } = require("sequelize");
 const models = require("../models");
-const post = models.post;
+const tutorial = models.tutorial;
+const step = models.step;
+const comment = models.comment;
 
-class PostController {
-  static async getPosts(req, res) {
+class TutorialController {
+  static async getTutorials(req, res) {
     try {
-      const posts = await post.findAll();
+      const tutorials = await tutorial.findAll();
       res.status(200).json({
         status: true,
-        count: posts.length,
-        data: posts,
+        count: tutorials.length,
+        data: tutorials,
       });
     } catch (error) {
       res.status(500).json({
@@ -17,11 +20,12 @@ class PostController {
       });
     }
   }
-  static async getPost(req, res) {
+  static async getTutorial(req, res) {
     try {
       const id = req.params.id;
-      const result = await post.findOne({
+      const result = await tutorial.findOne({
         where: { id },
+        include: [step],
       });
       if (result !== null) {
         res.status(200).json({
@@ -31,9 +35,27 @@ class PostController {
       } else {
         res.status(404).json({
           status: false,
-          message: "post not found!",
+          message: "tutorial not found!",
         });
       }
+    } catch (error) {
+      res.status(500).json({
+        status: false,
+        error: error,
+      });
+    }
+  }
+  static async searchByKey(req, res) {
+    try {
+      const key = req.params.key;
+      const result = await tutorial.findAll({
+        where: { name: { [Op.iLike]: `%${key}%` } },
+      });
+      res.status(200).json({
+        status: true,
+        count: result.length,
+        data: result,
+      });
     } catch (error) {
       res.status(500).json({
         status: false,
@@ -44,24 +66,26 @@ class PostController {
   static async add(req, res) {
     try {
       const userId = +req.userData.id;
-      const { caption, storageId } = req.body;
-      const image = req.file.filename || "";
-      const result = await post.create({
-        caption,
+      const { name, description, plantId } = req.body;
+      const image = req.file.filename || "image_default.png";
+      const result = await tutorial.create({
+        name,
+        description,
         image,
-        storageId,
         userId,
+        plantId,
       });
+
       if (result !== null) {
         res.status(201).json({
           status: true,
-          message: `post has been created!`,
+          message: `${name} has been created!`,
           data: result,
         });
       } else {
         res.status(400).json({
           status: false,
-          error: "post failed to created!",
+          error: "tutorial failed to created!",
         });
       }
     } catch (error) {
@@ -74,25 +98,27 @@ class PostController {
   static async edit(req, res) {
     try {
       const id = req.params.id;
-      const { caption, storageId } = req.body;
-      const image = req.file.filename || "";
-      const result = await post.update(
+      const { name, description, plantId } = req.body;
+      const image = req.file.filename;
+      const result = await tutorial.update(
         {
-          caption,
+          name,
+          description,
           image,
-          storageId,
+          plantId,
         },
         { where: { id } }
       );
+
       if (result[0] === 1) {
         res.status(201).json({
           status: true,
-          message: "update post successful",
+          message: "update tutorial successful",
         });
       } else {
         res.status(400).json({
           status: false,
-          message: "update post unsuccessful",
+          message: "update tutorial unsuccessful",
         });
       }
     } catch (error) {
@@ -105,16 +131,19 @@ class PostController {
   static async delete(req, res) {
     try {
       const id = req.params.id;
-      const result = await post.destroy({ where: { id } });
+      const result = await tutorial.destroy({ where: { id } });
       if (result === 1) {
+        await step.destroy({ where: { tutorialId: id } });
+        await comment.destroy({ where: { tutorialId: id } });
+
         res.status(201).json({
           status: true,
-          message: "delete post successful",
+          message: "delete tutorial successful",
         });
       } else {
         res.status(400).json({
           status: false,
-          message: "delete post unsuccessful",
+          message: "delete tutorial unsuccessful",
         });
       }
     } catch (error) {
@@ -126,4 +155,4 @@ class PostController {
   }
 }
 
-module.exports = PostController;
+module.exports = TutorialController;

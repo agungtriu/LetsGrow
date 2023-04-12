@@ -3,9 +3,9 @@ const { tokenGenerator } = require("../helpers/jsonwebtoken");
 const models = require("../models");
 const user = models.user;
 const profile = models.profile;
-const storage = models.storage;
+const tutorial = models.tutorial;
 const comment = models.comment;
-const post = models.post;
+const step = models.step;
 class UserController {
   static async getUsers(req, res) {
     try {
@@ -29,7 +29,7 @@ class UserController {
       const username = req.params.username;
       const result = await user.findOne({
         where: { username: username },
-        include: [profile, storage, comment, post],
+        include: [profile, tutorial],
       });
       if (result !== null) {
         res.status(200).json({
@@ -101,6 +101,7 @@ class UserController {
       const { username, password } = req.body;
       const result = await user.findOne({
         where: { username },
+        include: [profile],
       });
       if (result !== null) {
         if (decryptPwd(password, result.password)) {
@@ -222,14 +223,43 @@ class UserController {
       });
     }
   }
+  static async editAvatar(req, res) {
+    try {
+      const id = +req.userData.id;
+      const avatar = req.file.filename;
+      const result = await profile.update(
+        {
+          avatar,
+        },
+        { where: { userId: id } }
+      );
+
+      if (result[0] === 1) {
+        res.status(201).json({
+          status: true,
+          message: "update avatar successful",
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          message: "update avatar unsuccessful",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: false,
+        error: error,
+      });
+    }
+  }
   static async delete(req, res) {
     try {
       const id = +req.userData.id;
       const result = await user.destroy({ where: { id } });
       if (result === 1) {
         await profile.destroy({ where: { userId: id } });
-        await storage.destroy({ where: { userId: id } });
-        await post.destroy({ where: { userId: id } });
+        await tutorial.destroy({ where: { userId: id } });
+        await step.destroy({ where: { userId: id } });
         await comment.destroy({ where: { userId: id } });
 
         res.status(201).json({

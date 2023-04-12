@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      postId: {
+      tutorialId: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

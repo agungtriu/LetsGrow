@@ -17,13 +17,35 @@ class CommentController {
       });
     }
   }
+  static async getComment(req, res) {
+    try {
+      const id = req.params.id;
+      const result = await comment.findOne({ where: { id } });
+      if (result !== null) {
+        res.status(200).json({
+          status: true,
+          data: result,
+        });
+      } else {
+        res.status(404).json({
+          status: false,
+          message: "comment not found!",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: false,
+        error: error,
+      });
+    }
+  }
   static async add(req, res) {
     try {
       const userId = +req.userData.id;
-      const { text, stepId } = req.body;
+      const { text, tutorialId } = req.body;
       const result = await comment.create({
         text,
-        stepId,
+        tutorialId,
         userId,
       });
 

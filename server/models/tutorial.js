@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class post extends Model {
+  class tutorial extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,28 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      post.belongsTo(models.storage)
-      post.belongsTo(models.user)
+      tutorial.belongsTo(models.user)
+      tutorial.belongsTo(models.plant)
+      tutorial.hasMany(models.step)
+      tutorial.hasMany(models.comment)
     }
   }
-  post.init({
-    caption: {
-      type: DataTypes.TEXT,
+  tutorial.init({
+    name: {
+      type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          message: "Caption can not be empty.",
+          message: "Name can not be empty.",
         },
       },
     },
+    description: DataTypes.TEXT,
     image: DataTypes.STRING,
-    storageId: {
-      type: DataTypes.INTEGER,
-      validate: {
-        notEmpty: {
-          message: "StorageID can not be empty.",
-        },
-      },
-    },
     userId: {
       type: DataTypes.INTEGER,
       validate: {
@@ -41,9 +36,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    plantId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          message: "PlantID can not be empty.",
+        },
+      },
+    },
   }, {
     sequelize,
-    modelName: 'post',
+    modelName: 'tutorial',
   });
-  return post;
+  return tutorial;
 };

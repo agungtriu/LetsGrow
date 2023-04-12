@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      comment.belongsTo(models.post);
+      comment.belongsTo(models.tutorial);
       comment.belongsTo(models.user);
     }
   }
@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      postId: {
+      tutorialId: {
         type: DataTypes.INTEGER,
         validate: {
           notEmpty: {
-            message: "PostID can not be empty.",
+            message: "TutorialID can not be empty.",
           },
         },
       },

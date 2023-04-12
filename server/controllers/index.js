@@ -1,13 +1,13 @@
 const CommentController = require("./CommentController");
 const PlantController = require("./PlantController");
-const PostController = require("./PostController");
-const StorageController = require("./StorageController");
+const StepController = require("./StepController");
+const TutorialController = require("./TutorialController");
 const UserController = require("./UserController");
 
 module.exports = {
   CommentController,
   PlantController,
-  PostController,
-  StorageController,
+  StepController,
+  TutorialController,
   UserController,
 };

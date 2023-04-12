@@ -1,6 +1,6 @@
 const models = require("../models");
 const plant = models.plant;
-const storage = models.storage;
+const tutorial = models.tutorial;
 
 class PlantController {
   static async getPlants(req, res) {
@@ -76,7 +76,7 @@ class PlantController {
     try {
       const id = req.params.id;
       const { name, description, type } = req.body;
-      const image = req.file.filename || "";
+      const image = req.file.filename;
       const result = await plant.update(
         {
           name,
@@ -110,7 +110,7 @@ class PlantController {
       const id = req.params.id;
       const result = await plant.destroy({ where: { id } });
       if (result === 1) {
-        await storage.destroy({ where: { plantId: id } });
+        await tutorial.destroy({ where: { plantId: id } });
 
         res.status(201).json({
           status: true,

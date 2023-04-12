@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class profile extends Model {
+  class step extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,21 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      profile.belongsTo(models.user);
+      step.belongsTo(models.tutorial);
+      step.belongsTo(models.user);
     }
   }
-  profile.init(
+  step.init(
     {
-      avatar: {
-        type: DataTypes.STRING,
+      image: DataTypes.STRING,
+      description: {
+        type: DataTypes.TEXT,
         validate: {
           notEmpty: {
-            message: "Avatar can not be empty.",
+            message: "Description can not be empty.",
           },
         },
       },
-      phone: DataTypes.STRING,
-      address: DataTypes.STRING,
+      tutorialId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "TutorialID can not be empty.",
+          },
+        },
+      },
       userId: {
         type: DataTypes.INTEGER,
         validate: {
@@ -34,14 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      hooks: {
-        beforeCreate: function (profile, option) {
-          profile.avatar = "avatar_default.png";
-        },
-      },
       sequelize,
-      modelName: "profile",
+      modelName: "step",
     }
   );
-  return profile;
+  return step;
 };
