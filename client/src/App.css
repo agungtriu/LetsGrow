@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Josefin+Sans:ital,wght@0,200;0,300;1,700&family=Open+Sans:wght@300&family=Righteous&family=Varela+Round&display=swap');
+
+:root {
+font-size: 20px;
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
+.background-color{
+  background-color: rgb(255, 255, 255);
+}
+
+
