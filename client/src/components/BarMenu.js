@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const BarMenu = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className=" navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">

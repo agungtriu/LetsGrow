@@ -1,5 +1,13 @@
 import React from 'react'
-import { HomePage, Tutorial, Information } from '../pages'
+import { 
+  HomePage, 
+  ListProfile,
+  Login,
+  SignUp,
+  ListPlant,
+  Steps
+  
+} from '../pages'
 import {
   Routes,
   Route
@@ -10,12 +18,13 @@ const MainContent = () => {
     <div className='container-fluid'>
       <Routes>
         <Route path='/' element={<HomePage></HomePage>}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/' element={<Tutorial></Tutorial>}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/' element={<Information></Information>}></Route>
+        <Route path="/users" element={<ListProfile></ListProfile>}></Route>
+        <Route path="/users">
+          <Route path="login" element={<Login></Login>}></Route>
+          <Route path="register" element={<SignUp></SignUp>}></Route>
+        </Route>
+        <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
+        <Route path="/steps" element={<Steps></Steps>}></Route>
       </Routes>
     </div>
   )
