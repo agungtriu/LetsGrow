@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Login,ListProfile,ListPlant,SignUp } from '../pages'
+import { Login,ListProfile,ListPlant,SignUp,Steps,ListComment } from '../pages'
 
 const Account = () => {
   return (
@@ -16,6 +16,10 @@ const Account = () => {
     </Routes>
     <Routes>
         <Route path='/users' element={<ListProfile></ListProfile>}></Route>
+    </Routes>
+    <Routes>
+        <Route path='/steps' element={<Steps></Steps>}>
+        </Route>
     </Routes>
     </>
   )
