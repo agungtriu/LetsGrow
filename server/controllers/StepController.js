@@ -1,3 +1,4 @@
+const deleteFile = require("../helpers/deleteFile");
 const models = require("../models");
 const step = models.step;
 
@@ -74,6 +75,9 @@ class StepController {
   static async edit(req, res) {
     try {
       const id = req.params.id;
+      const beforeUpdate = await step.findOne({
+        where: { id },
+      });
       const { description } = req.body;
       const image = req.file.filename;
       const result = await step.update(
@@ -84,6 +88,7 @@ class StepController {
         { where: { id } }
       );
       if (result[0] === 1) {
+        deleteFile(beforeUpdate.image);
         res.status(201).json({
           status: true,
           message: "update step successful",
@@ -104,8 +109,12 @@ class StepController {
   static async delete(req, res) {
     try {
       const id = req.params.id;
+      const beforeDelete = await step.findOne({
+        where: { id },
+      });
       const result = await step.destroy({ where: { id } });
       if (result === 1) {
+        deleteFile(beforeDelete.image);
         res.status(201).json({
           status: true,
           message: "delete step successful",

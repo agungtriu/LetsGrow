@@ -1,3 +1,5 @@
+const deleteBulkFile = require("../helpers/deleteBulkFile");
+const deleteFile = require("../helpers/deleteFile");
 const models = require("../models");
 const plant = models.plant;
 const tutorial = models.tutorial;
@@ -75,6 +77,7 @@ class PlantController {
   static async edit(req, res) {
     try {
       const id = req.params.id;
+      const beforeUpdate = await plant.findOne({ where: { id } });
       const { name, description, type } = req.body;
       const image = req.file.filename;
       const result = await plant.update(
@@ -88,6 +91,7 @@ class PlantController {
       );
 
       if (result[0] === 1) {
+        deleteFile(beforeUpdate.image);
         res.status(201).json({
           status: true,
           message: "update plant successful",
@@ -108,9 +112,16 @@ class PlantController {
   static async delete(req, res) {
     try {
       const id = req.params.id;
+      const beforeDelete = await plant.findOne({ where: { id } });
       const result = await plant.destroy({ where: { id } });
       if (result === 1) {
+        deleteFile(beforeDelete.image);
+
+        const beforeTutorialsDelete = await tutorial.findAll({
+          where: { plantId: id },
+        });
         await tutorial.destroy({ where: { plantId: id } });
+        deleteBulkFile(beforeTutorialsDelete);
 
         res.status(201).json({
           status: true,

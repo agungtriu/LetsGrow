@@ -1,4 +1,6 @@
 const { encryptPwd, decryptPwd } = require("../helpers/bcrypt");
+const deleteBulkFile = require("../helpers/deleteBulkFile");
+const deleteFile = require("../helpers/deleteFile");
 const { tokenGenerator } = require("../helpers/jsonwebtoken");
 const models = require("../models");
 const user = models.user;
@@ -226,6 +228,9 @@ class UserController {
   static async editAvatar(req, res) {
     try {
       const id = +req.userData.id;
+      const beforeUpdate = await profile.findOne({
+        where: { userId: id },
+      });
       const avatar = req.file.filename;
       const result = await profile.update(
         {
@@ -235,6 +240,7 @@ class UserController {
       );
 
       if (result[0] === 1) {
+        deleteFile(beforeUpdate.avatar);
         res.status(201).json({
           status: true,
           message: "update avatar successful",
@@ -257,9 +263,22 @@ class UserController {
       const id = +req.userData.id;
       const result = await user.destroy({ where: { id } });
       if (result === 1) {
+        const beforeProfileDelete = await profile.findOne({
+          where: { userId: id },
+        });
         await profile.destroy({ where: { userId: id } });
+        deleteFile(beforeProfileDelete.avatar);
+
+        const beforeTutorialsDelete = await tutorial.findAll({
+          where: { userId: id },
+        });
         await tutorial.destroy({ where: { userId: id } });
+        deleteBulkFile(beforeTutorialsDelete);
+
+        const beforeStepsDelete = await step.findAll({ where: { userId: id } });
         await step.destroy({ where: { userId: id } });
+        deleteBulkFile(beforeStepsDelete);
+
         await comment.destroy({ where: { userId: id } });
 
         res.status(201).json({

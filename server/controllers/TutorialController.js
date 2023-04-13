@@ -1,5 +1,11 @@
+const fs = require("fs");
+const { promisify } = require("util");
+const unlinkAsync = promisify(fs.unlink);
+
 const { Op } = require("sequelize");
 const models = require("../models");
+const deleteFile = require("../helpers/deleteFile");
+const deleteBulkFile = require("../helpers/deleteBulkFile");
 const tutorial = models.tutorial;
 const step = models.step;
 const comment = models.comment;
@@ -22,7 +28,7 @@ class TutorialController {
   }
   static async getTutorial(req, res) {
     try {
-      const id = req.params.id;
+      const id = +req.params.id;
       const result = await tutorial.findOne({
         where: { id },
         include: [step],
@@ -97,7 +103,11 @@ class TutorialController {
   }
   static async edit(req, res) {
     try {
-      const id = req.params.id;
+      const id = +req.params.id;
+      const beforeUpdate = await tutorial.findOne({
+        where: { id },
+      });
+
       const { name, description, plantId } = req.body;
       const image = req.file.filename;
       const result = await tutorial.update(
@@ -111,6 +121,7 @@ class TutorialController {
       );
 
       if (result[0] === 1) {
+        deleteFile(beforeUpdate.image);
         res.status(201).json({
           status: true,
           message: "update tutorial successful",
@@ -130,10 +141,20 @@ class TutorialController {
   }
   static async delete(req, res) {
     try {
-      const id = req.params.id;
+      const id = +req.params.id;
+      const beforeDelete = await tutorial.findOne({
+        where: { id },
+      });
       const result = await tutorial.destroy({ where: { id } });
       if (result === 1) {
+        deleteFile(beforeDelete.image);
+
+        const beforeDeleteSteps = await step.findAll({
+          where: { tutorialId: id },
+        });
         await step.destroy({ where: { tutorialId: id } });
+        deleteBulkFile(beforeDeleteSteps);
+
         await comment.destroy({ where: { tutorialId: id } });
 
         res.status(201).json({
