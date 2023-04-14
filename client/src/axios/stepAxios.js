@@ -1,7 +1,9 @@
 import axios from "axios"
 import Swal from "sweetalert2"
+const config = require('../../config/config.js')
+const url = config.LETS_GROW
 
-const URL = 'https://letsgrow-api.fly.dev/Steps'
+const URL = url + '/steps'
 
 const getSteps = async () => {
 
