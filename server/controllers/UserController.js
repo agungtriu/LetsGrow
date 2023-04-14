@@ -111,7 +111,11 @@ class UserController {
           res.status(202).json({
             status: true,
             message: "login successful",
-            access_token: access_token,
+            data: {
+              username: result.username,
+              image: result.profile.avatar,
+              access_token: access_token,
+            },
           });
         } else {
           res.status(400).json({
