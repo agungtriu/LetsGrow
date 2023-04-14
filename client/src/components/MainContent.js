@@ -1,12 +1,21 @@
 import React from 'react'
-import { 
-  HomePage, 
+import {
+  HomePage,
   ListProfile,
   Login,
   SignUp,
   ListPlant,
-  Steps
-  
+  Steps,
+  AddPlant,
+  EditPlant,
+  AddStep,
+  EditStep,
+  EditComment,
+  ListTutorial,
+  UpdateProfile,
+  UpdatePassword,
+  UpdateAvatar
+
 } from '../pages'
 import {
   Routes,
@@ -22,9 +31,26 @@ const MainContent = () => {
         <Route path="/users">
           <Route path="login" element={<Login></Login>}></Route>
           <Route path="register" element={<SignUp></SignUp>}></Route>
+          <Route path='edit'>
+            <Route path='profile' element={<UpdateProfile></UpdateProfile>}></Route>
+            <Route path='password' element={<UpdatePassword></UpdatePassword>}></Route>
+            <Route path="avatar" element={<UpdateAvatar></UpdateAvatar>}></Route>
+          </Route>
         </Route>
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
-        <Route path="/steps" element={<Steps></Steps>}></Route>
+        <Route path="/plants">
+          <Route path='add' element={<AddPlant></AddPlant>}></Route>
+          <Route path='edit/:plantId' element={<EditPlant></EditPlant>}></Route>
+        </Route>
+        <Route path='/tutorials' element={<ListTutorial></ListTutorial>}></Route>
+        <Route path="/steps/:stepId" element={<Steps></Steps>}></Route>
+        <Route path="/steps">
+          <Route path="add" element={<AddStep></AddStep>}></Route>
+          <Route path="edit/:stepId" element={<EditStep></EditStep>}></Route>
+        </Route>
+        <Route path='/comments'>
+          <Route path='edit/:commentId' element={<EditComment></EditComment>}></Route>
+        </Route>
       </Routes>
     </div>
   )
