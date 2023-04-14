@@ -1,9 +1,9 @@
 import axios from "axios"
 import Swal from "sweetalert2"
 const config = require('../../config/config.js')
-const url = config.baseURL
+const baseUrl = config.baseUrl
 
-const URL = url + '/plants'
+const URL = baseUrl + '/plants'
 
 const getPlants = async () => {
 

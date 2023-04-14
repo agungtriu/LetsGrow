@@ -1,2 +1,2 @@
-const baseURL = 'https://letsgrow-api.fly.dev'
-module.exports = {baseURL}
+const baseUrl = 'https://letsgrow-api.fly.dev'
+module.exports = {baseUrl}

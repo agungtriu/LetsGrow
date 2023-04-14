@@ -1,10 +1,10 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const config = require('../../config/config.js')
-const url = config.baseURL
+const baseUrl = config.baseUrl
 
-//url
-const URL = url + '/tutorials'
+//baseUrl
+const URL = baseUrl + '/tutorials'
 const getTutorials = async () => {
 
 }
