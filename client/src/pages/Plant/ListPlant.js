@@ -7,9 +7,8 @@ import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 const ListPlant = () => {
   return (
     <>
-    <div className='btn btn-outline-dark'>
-      <span>Add</span>
-      <Link to='/plant/add'><FontAwesomeIcon icon={faPlus} /></Link>
+    <div className='mx-auto row'>
+      <Link className='btn btn-outline-dark' to='/plants/add'>Add Plant <FontAwesomeIcon icon={faPlus} /></Link>
     </div>
       <div class="card mb-3" >
         <div class="row g-0">
@@ -29,12 +28,12 @@ const ListPlant = () => {
               <div className='row row-cols-auto d-flex justify-content-center'>
                 <div className='col'>
                   <div class="input-group flex-nowrap">
-                    <Link className='btn btn-outline-warning' to='/users/delete'><FontAwesomeIcon icon={faTrash} style={{ color: "#ba1c1c", }} /></Link>
+                    <Link className='btn btn-outline-dark' to='/plants/delete/:plantId'><FontAwesomeIcon icon={faTrash} style={{ color: "#ba1c1c", }} /></Link>
                   </div>
                 </div>
                 <div className='col'>
                   <div class="input-group flex-nowrap">
-                    <Link className='btn btn-outline-dark' to='/users/delete'><FontAwesomeIcon icon={faPen}  /></Link>
+                    <Link className='btn btn-outline-dark' to='/plants/edit/:plantId'><FontAwesomeIcon icon={faPen}  /></Link>
                   </div>
                 </div>
               </div>

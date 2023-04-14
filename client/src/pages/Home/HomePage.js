@@ -1,6 +1,6 @@
 import React from 'react'
 import { images } from '../../images'
-import Tutorial from './Tutorial'
+import Tutorial from '../Tutorial/Tutorial'
 import Information from './Information'
 
 const HomePage = () => {
