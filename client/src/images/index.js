@@ -7,6 +7,7 @@ export const images = {
     Kaktus: require('./Kaktus.jpg'),
     Melati: require('./Melati.jpg'),
     Enceng: require('./Enceng.jpg'),
-    avatar: require('./avatar.jpg')
+    avatar: require('./avatar.jpg'),
+    logo: require('./logo.jpg')
 
 }

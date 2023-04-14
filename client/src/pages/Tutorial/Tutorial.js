@@ -1,44 +1,57 @@
 import React from 'react'
 import { images } from '../../images'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Tutorial = () => {
   return (
     <>
-      <div className='text-center bg-dark text-white bg-opacity-75'>Our Update</div>
-      <div class="card-group">
-        <div class="card">
-        <Link to='/steps'>
-          <img src={images.Kaktus} class="card-img-top" alt="..." />
-        </Link>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-body-secondary">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <Link to='/steps'>
-          <img src={images.Melati} class="card-img-top" alt="..." />
-          </Link>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-body-secondary">Last updated 3 mins ago</small>
+      <h4 className=' bg-dark text-white text-center'>Tutorial</h4>
+      <div className="row row-cols-1 row-cols-md-3 g-4">
+        <div className="col">
+          <div className="card h-100">
+            <img src={images.Corn} className="card-img-top" alt="Corn" />
+            <div className="card-body">
+              <Link to='steps/:stepId'>
+                <h5 className="card-title">Name</h5>
+              </Link>
+              <p className="card-text">Description</p>
+              <p className="card-text">
+                <small className="text-muted">Username</small>
+              </p>
+              <p className="card-text">
+                <small className="text-muted">Plant Name</small>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <img src={images.anggrek} class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        <div className="col">
+          <div className="card h-100">
+            <img src={images.Melati} className="card-img-top" alt="Sunflower" />
+            <div className="card-body">
+              <h5 className="card-title">Name</h5>
+              <p className="card-text">Description</p>
+              <p className="card-text">
+                <small className="text-muted">Username</small>
+              </p>
+              <p className="card-text">
+                <small className="text-muted">Plant Name</small>
+              </p>
+            </div>
           </div>
-          <div class="card-footer">
-            <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </div>
+        <div className="col">
+          <div className="card h-100">
+            <img src={images.anggrek} className="card-img-top" alt="Rose" />
+            <div className="card-body">
+              <h5 className="card-title">Name</h5>
+              <p className="card-text">Description</p>
+              <p className="card-text">
+                <small className="text-muted">Username</small>
+              </p>
+              <p className="card-text">
+                <small className="text-muted">Plant Name</small>
+              </p>
+            </div>
           </div>
         </div>
       </div>

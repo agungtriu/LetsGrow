@@ -10,7 +10,11 @@ import {
   EditPlant,
   AddStep,
   EditStep,
-  EditComment
+  EditComment,
+  ListTutorial,
+  UpdateProfile,
+  UpdatePassword,
+  UpdateAvatar
 
 } from '../pages'
 import {
@@ -27,13 +31,17 @@ const MainContent = () => {
         <Route path="/users">
           <Route path="login" element={<Login></Login>}></Route>
           <Route path="register" element={<SignUp></SignUp>}></Route>
+          <Route path='edit/profile' element={<UpdateProfile></UpdateProfile>}></Route>
+          <Route path='edit/password' element={<UpdatePassword></UpdatePassword>}></Route>
+          <Route path="edit/avatar" element={<UpdateAvatar></UpdateAvatar>}></Route>
         </Route>
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
         <Route path="/plants">
           <Route path='add' element={<AddPlant></AddPlant>}></Route>
           <Route path='edit/:plantId' element={<EditPlant></EditPlant>}></Route>
         </Route>
-        <Route path="/steps" element={<Steps></Steps>}></Route>
+        <Route path='/tutorials' element={<ListTutorial></ListTutorial>}></Route>
+        <Route path="/steps/:stepId" element={<Steps></Steps>}></Route>
         <Route path="/steps">
           <Route path="add" element={<AddStep></AddStep>}></Route>
           <Route path="edit/:stepId" element={<EditStep></EditStep>}></Route>
