@@ -42,6 +42,7 @@ const BarMenu = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+          <input className="form-control pd-3 me-2" type="search" placeholder="Search" aria-label="Search" />
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
@@ -54,7 +55,7 @@ const BarMenu = (props) => {
               ) : null}
               <li className="nav-item">
                 <Link className="nav-link active" to="/tutorials">
-                  All Tutorial
+                  Tutorial
                 </Link>
               </li>
               <li className="nav-item">

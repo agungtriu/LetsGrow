@@ -1,6 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { editPlants, getPlantsById } from '../../axios/plantAxios'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditPlant = () => {
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    image: null,
+    type: ''
+  })
+
+  const navigate = useNavigate()
+  const params = useParams()
+
+  const getPlantKey = () => {
+    const { id } = params
+    getPlantsById(+id, result => {
+        setForm({
+          name: result.name,
+          description: result.description,
+          image: result.image,
+          type: result.type
+        })
+
+    })
+
+}
+
+  useEffect(() => {
+    getPlantKey()
+  })
+
+  const submitHandler = () => {
+    editPlants(+params.id,form)
+    navigate('/plants')
+  }
+
+
   return (
     <>
       <div className='bg-dark bg-opacity-10'>
@@ -11,26 +47,26 @@ const EditPlant = () => {
               <div className="bg-light p-3 rounded">
                 <form>
                   <div className="mb-3">
-                    <label for="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" />
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name"/>
                   </div>
                   <div className="mb-3">
-                    <label for="description" className="form-label">Description</label>
+                    <label htmlFor="description" className="form-label">Description</label>
                     <textarea className="form-control" id="description"></textarea>
                   </div>
                   <div className="mb-3">
-                    <label for="image" className="form-label">Image</label>
+                    <label htmlFor="image" className="form-label">Image</label>
                     <input type="file" className="form-control" id="image" />
                   </div>
                   <div className="mb-3">
-                    <label for="type" className="form-label">Type</label>
+                    <label htmlFor="type" className="form-label">Type</label>
                     <select className="form-control" id="type">
-                      <option value="type1">Type 1</option>
-                      <option value="type2">Type 2</option>
-                      <option value="type3">Type 3</option>
+                      <option value="type1">Indoor Plant</option>
+                      <option value="type2">Outdoor Plant</option>
+                      <option value="type3">Other</option>
                     </select>
                   </div>
-                  <button type="submit" className="btn btn-primary">Submit</button>
+                  <button type="submit" className="btn btn-primary" onClick={() => submitHandler()}>Submit</button>
                 </form>
               </div>
             </div>

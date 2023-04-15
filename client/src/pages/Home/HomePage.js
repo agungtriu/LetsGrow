@@ -21,8 +21,6 @@ const HomePage = () => {
               <h5>LetsGrow</h5>
             </div>
             <p className="card-text ">Identify your Favorite Plants</p>
-            <input class="form-control pd-3 me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-light" type="submit">Search</button>
           </div>
         </div>
         <Tutorial></Tutorial>
