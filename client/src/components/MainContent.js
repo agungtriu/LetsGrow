@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   HomePage,
   ListProfile,
@@ -14,27 +14,36 @@ import {
   ListTutorial,
   UpdateProfile,
   UpdatePassword,
-  UpdateAvatar
+  UpdateAvatar,
+} from "../pages";
+import { Routes, Route } from "react-router-dom";
 
-} from '../pages'
-import {
-  Routes,
-  Route
-} from 'react-router-dom'
-
-const MainContent = () => {
+const MainContent = (props) => {
+  const { loginCbHandler } = props;
   return (
-    <div className='container-fluid'>
+    <div className="container">
       <Routes>
-        <Route path='/' element={<HomePage></HomePage>}></Route>
-        <Route path="/users" element={<ListProfile></ListProfile>}></Route>
-        <Route path="/users">
-          <Route path="login" element={<Login></Login>}></Route>
+        <Route path="/" element={<HomePage></HomePage>}></Route>
+        <Route path="users" element={<ListProfile></ListProfile>}></Route>
+        <Route path="users">
+          <Route
+            path="login"
+            element={<Login loginCbHandler={loginCbHandler}></Login>}
+          ></Route>
           <Route path="register" element={<SignUp></SignUp>}></Route>
-          <Route path='edit'>
-            <Route path='profile' element={<UpdateProfile></UpdateProfile>}></Route>
-            <Route path='password' element={<UpdatePassword></UpdatePassword>}></Route>
-            <Route path="avatar" element={<UpdateAvatar></UpdateAvatar>}></Route>
+          <Route path="edit">
+            <Route
+              path="profile"
+              element={<UpdateProfile></UpdateProfile>}
+            ></Route>
+            <Route
+              path="password"
+              element={<UpdatePassword></UpdatePassword>}
+            ></Route>
+            <Route
+              path="avatar"
+              element={<UpdateAvatar></UpdateAvatar>}
+            ></Route>
           </Route>
         </Route>
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
@@ -44,7 +53,10 @@ const MainContent = () => {
             <Route path=':plantId' element={<EditPlant></EditPlant>}></Route>
           </Route>
         </Route>
-        <Route path='/tutorials' element={<ListTutorial></ListTutorial>}></Route>
+        <Route
+          path="/tutorials"
+          element={<ListTutorial></ListTutorial>}
+        ></Route>
         <Route path="/steps/:stepId" element={<Steps></Steps>}></Route>
         <Route path="/steps">
           <Route path="add" element={<AddStep></AddStep>}></Route>
@@ -53,13 +65,11 @@ const MainContent = () => {
           </Route>
         </Route>
         <Route path='/comments'>
-          <Route path='edit'>
-            <Route path=':commentId' element={<EditComment></EditComment>}></Route>
-          </Route>
+          <Route path='edit/:commentId' element={<EditComment></EditComment>}></Route>
         </Route>
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default MainContent
+export default MainContent;
