@@ -1,37 +1,88 @@
-import React from 'react'
-import { images } from '../../images'
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+import { images } from "../../images";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../axios/userAxios";
 
-const Login = () => {
+const Login = (props) => {
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { loginCbHandler } = props;
+  const loginHandler = () => {
+    loginCbHandler(true);
+  };
+  const navigation = useNavigate();
+  const submitHandler = () => {
+    loginUser(form, (status) => {
+      if (status) {
+        loginHandler();
+        navigation("/");
+      }
+    });
+  };
   return (
     <>
       <div className="position-absolute top-50 start-50 translate-middle">
-        <div class="card mb-3">
-          <div class="row g-0" >
-            <div class="col-md-4">
-              <img src={images.Home2} class="img-fluid rounded-start" />
+        <div className="card mb-3">
+          <div className="row g-0 m-3">
+            <div className="col-md-4">
+              <img
+                src={images.Home2}
+                className="img-fluid rounded-start"
+                alt=""
+              />
             </div>
-            <div class="col-md-8">
-              <div class="form-floating mb-1">
-                <input type="email" class="form-control" id="floatingInput" />
-                <label for="floatingInput">Email address</label>
+            <div className="col-md-8">
+              <div className="form-floating mb-1">
+                <input
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
+                  type="text"
+                  className="form-control"
+                  id="floatingUsename"
+                />
+                <label htmlFor="floatingUsename">Username</label>
               </div>
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword"/>
-                <label for="floatingPassword">Password</label>
+              <div className="form-floating">
+                <input
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  type="password"
+                  className="form-control"
+                  id="floatingPassword"
+                />
+                <label htmlFor="floatingPassword">Password</label>
               </div>
-              <div className='mb-10 text-center'>
-                <button class=" btn btn-outline-warning text-center" type="submit">Login</button>
+              <div className="text-center mt-3 mb-5">
+                <button
+                  onClick={() => submitHandler()}
+                  className=" btn btn-outline-primary"
+                  type="submit"
+                >
+                  Login
+                </button>
               </div>
-              <p className='text-center'>
-                Don't have Account? : <Link className='' to='/users/register'>SignUp</Link>
+              <p className="text-center">
+                Don't have Account?
+                <Link
+                  className="link-primary text-decoration-none ms-2"
+                  to="/users/register"
+                >
+                  Register
+                </Link>
               </p>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

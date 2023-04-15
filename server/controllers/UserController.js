@@ -114,6 +114,7 @@ class UserController {
             data: {
               username: result.username,
               image: result.profile.avatar,
+              role: result.role,
               access_token: access_token,
             },
           });
@@ -139,17 +140,17 @@ class UserController {
   static async editPassword(req, res) {
     try {
       const { oldPassword, newPassword, confirmPassword } = req.body;
-      const username = req.userData.username;
+      const id = req.userData.id;
 
       if (newPassword === confirmPassword) {
-        const account = await user.findOne({ where: { username } });
+        const account = await user.findOne({ where: { id } });
         if (decryptPwd(oldPassword, account.password)) {
           const result = await user.update(
             {
               password: encryptPwd(newPassword),
             },
             {
-              where: { username },
+              where: { id },
             }
           );
           if (result[0] === 1) {
@@ -245,9 +246,16 @@ class UserController {
 
       if (result[0] === 1) {
         deleteFile(_profile.avatar);
+
+        const _result = await profile.findOne({
+          where: { userId: id },
+        });
         res.status(201).json({
           status: true,
           message: "update avatar successful",
+          data: {
+            image: _result.avatar,
+          },
         });
       } else {
         res.status(400).json({
