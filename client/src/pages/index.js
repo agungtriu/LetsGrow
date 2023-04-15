@@ -16,10 +16,11 @@ import EditStep from "./Step/EditStep"
 import Tutorial from "./Tutorial/Tutorial"
 import ListTutorial from "./Tutorial/ListTutorial"
 //users
+import Profile from "./User/Profile"
 import ListProfile from "./User/ListProfile"
-import UpdateProfile from "./User/UpdateProfile"
-import UpdatePassword from "./User/UpdatePassword"
-import UpdateAvatar from "./User/UpdateAvatar"
+import EditProfile from "./User/EditProfile"
+import EditPassword from "./User/EditPassword"
+import EditAvatar from "./User/EditAvatar"
 import Login from "./User/Login"
 import SignUp from "./User/SignUp"
 
@@ -29,5 +30,5 @@ export {
     ListPlant,AddPlant,EditPlant,
     Steps,AddStep,EditStep,
     Tutorial,ListTutorial,
-    ListProfile,Login,SignUp,UpdateProfile,UpdatePassword,UpdateAvatar
+    Profile, ListProfile,Login,SignUp,EditProfile,EditPassword,EditAvatar
 }

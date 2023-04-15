@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiLogOut, FiUser } from "react-icons/fi";
 import { imageUrl } from "../config/config";
+import Swal from "sweetalert2";
 
 const BarMenu = (props) => {
   const { loginStatus, loginCbHandler } = props;
+  const [profile, setProfile] = useState({
+    avatar: "",
+    role: "",
+  });
 
-  const avatar = localStorage.getItem("avatar");
-  const avatarUrl = `${imageUrl}${avatar}`;
-  const role = localStorage.getItem("role");
+  useEffect(() => {
+    setProfile({
+      avatar: `${imageUrl}${localStorage.getItem("avatar")}`,
+      role: localStorage.getItem("role"),
+    });
+  }, []);
+
   const logoutHandler = () => {
     localStorage.clear();
     loginCbHandler(false);
+    Swal.fire("Logout", "logout successful", "success");
   };
   return (
     <>
@@ -35,7 +45,7 @@ const BarMenu = (props) => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
-              {role === "admin" ? (
+              {profile.role === "admin" ? (
                 <li className="nav-item">
                   <Link className="nav-link active" to="/plants">
                     Plants
@@ -52,12 +62,12 @@ const BarMenu = (props) => {
                   <div className="dropdown m-1">
                     <img
                       className="rounded-circle avatar-mini"
-                      src={avatarUrl}
+                      src={profile.avatar}
                       alt=""
                     />
                     <ul className="dropdown-menu">
                       <li>
-                        <Link className="dropdown-item " to={`/users`}>
+                        <Link className="dropdown-item " to={`/users/detail`}>
                           {" "}
                           <FiUser /> <span className="m-3">Profile</span>{" "}
                         </Link>
