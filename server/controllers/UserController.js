@@ -114,6 +114,7 @@ class UserController {
             data: {
               username: result.username,
               image: result.profile.avatar,
+              role: result.role,
               access_token: access_token,
             },
           });
