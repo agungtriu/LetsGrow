@@ -1,14 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Josefin+Sans:ital,wght@0,200;0,300;1,700&family=Open+Sans:wght@300&family=Righteous&family=Varela+Round&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@200&family=Josefin+Sans:ital,wght@0,200;0,300;1,700&family=Open+Sans:wght@300&family=Righteous&family=Varela+Round&display=swap");
 
 :root {
-font-size: 20px;
+  font-size: 20px;
 }
 
 body {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
-.background-color{
+.background-color {
   background-color: rgb(255, 255, 255);
 }
 
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
 
+.dropdown > .dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: none;
+}
+
+.avatar-mini {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
