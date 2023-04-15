@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { getTutorials } from '../../axios/tutorialAxios'
-import { images } from '../../images'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
