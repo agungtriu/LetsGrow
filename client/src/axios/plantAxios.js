@@ -1,9 +1,9 @@
 import axios from "axios"
 import Swal from "sweetalert2"
-const config = require('../config/config.js')
-const baseUrl = config.baseUrl
+const config = require("../config/config");
+const baseUrl = config.baseUrl;
 
-const URL = baseUrl + 'plants/'
+const URL = baseUrl + '/plants/'
 
 const getPlants = async (cb) => {
     try {
@@ -38,7 +38,10 @@ const addPlants = async (plant) => {
         let plants = await axios({
             method: "POST",
             url: URL + "add",
-            data: plant
+            data: plant,
+            headers: {
+                access_token: localStorage.access_token,
+              },
         })
         console.log(plants.data.data)
 

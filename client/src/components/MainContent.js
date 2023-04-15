@@ -1,7 +1,6 @@
 import React from "react";
 import {
   HomePage,
-  ListProfile,
   Login,
   SignUp,
   ListPlant,
@@ -12,9 +11,13 @@ import {
   EditStep,
   EditComment,
   ListTutorial,
-  UpdateProfile,
-  UpdatePassword,
-  UpdateAvatar,
+  Profile,
+  EditPassword,
+  EditProfile,
+  EditAvatar,
+  ListProfile,
+  AddTutorial,
+  EditTutorial,
 } from "../pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -26,24 +29,19 @@ const MainContent = (props) => {
         <Route path="/" element={<HomePage></HomePage>}></Route>
         <Route path="users" element={<ListProfile></ListProfile>}></Route>
         <Route path="users">
+          <Route path="detail" element={<Profile></Profile>}></Route>
           <Route
             path="login"
             element={<Login loginCbHandler={loginCbHandler}></Login>}
           ></Route>
           <Route path="register" element={<SignUp></SignUp>}></Route>
           <Route path="edit">
-            <Route
-              path="profile"
-              element={<UpdateProfile></UpdateProfile>}
-            ></Route>
+            <Route path="profile" element={<EditProfile></EditProfile>}></Route>
             <Route
               path="password"
-              element={<UpdatePassword></UpdatePassword>}
+              element={<EditPassword></EditPassword>}
             ></Route>
-            <Route
-              path="avatar"
-              element={<UpdateAvatar></UpdateAvatar>}
-            ></Route>
+            <Route path="avatar" element={<EditAvatar></EditAvatar>}></Route>
           </Route>
         </Route>
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
@@ -53,10 +51,13 @@ const MainContent = (props) => {
             <Route path=':plantId' element={<EditPlant></EditPlant>}></Route>
           </Route>
         </Route>
-        <Route
-          path="/tutorials"
-          element={<ListTutorial></ListTutorial>}
-        ></Route>
+        <Route path="/tutorials" element={<ListTutorial></ListTutorial>}></Route>
+        <Route path="/tutorials">
+          <Route path="add" element={<AddTutorial></AddTutorial>}></Route>
+          <Route path="edit">
+            <Route path=":tutorialId" element={<EditTutorial></EditTutorial>}></Route>
+          </Route>
+        </Route>
         <Route path="/steps/:stepId" element={<Steps></Steps>}></Route>
         <Route path="/steps">
           <Route path="add" element={<AddStep></AddStep>}></Route>

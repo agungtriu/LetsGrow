@@ -14,12 +14,15 @@ import AddStep from "./Step/AddStep"
 import EditStep from "./Step/EditStep"
 //tutorial
 import Tutorial from "./Tutorial/Tutorial"
+import AddTutorial from "./Tutorial/AddTutorial"
 import ListTutorial from "./Tutorial/ListTutorial"
+import EditTutorial from "./Tutorial/EditTutorial"
 //users
+import Profile from "./User/Profile"
 import ListProfile from "./User/ListProfile"
-import UpdateProfile from "./User/UpdateProfile"
-import UpdatePassword from "./User/UpdatePassword"
-import UpdateAvatar from "./User/UpdateAvatar"
+import EditProfile from "./User/EditProfile"
+import EditPassword from "./User/EditPassword"
+import EditAvatar from "./User/EditAvatar"
 import Login from "./User/Login"
 import SignUp from "./User/SignUp"
 //
@@ -30,7 +33,7 @@ export {
     HomePage,Information,
     ListPlant,AddPlant,EditPlant,
     Steps,AddStep,EditStep,
-    Tutorial,ListTutorial,
-    ListProfile,Login,SignUp,UpdateProfile,UpdatePassword,UpdateAvatar,
+    Tutorial,AddTutorial,ListTutorial,EditTutorial,
+    Profile,ListProfile,Login,SignUp,EditProfile,EditPassword,EditAvatar,
     Loading
 }

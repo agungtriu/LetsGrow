@@ -16,6 +16,7 @@ const AddPlant = () => {
     addPlants(form)
     navigate('/plants')
   }
+  console.log(form)
   return (
     <>
       <div className='bg-dark bg-opacity-10'>
