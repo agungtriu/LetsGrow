@@ -40,16 +40,22 @@ const MainContent = () => {
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
         <Route path="/plants">
           <Route path='add' element={<AddPlant></AddPlant>}></Route>
-          <Route path='edit/:plantId' element={<EditPlant></EditPlant>}></Route>
+          <Route path='edit'>
+            <Route path=':plantId' element={<EditPlant></EditPlant>}></Route>
+          </Route>
         </Route>
         <Route path='/tutorials' element={<ListTutorial></ListTutorial>}></Route>
         <Route path="/steps/:stepId" element={<Steps></Steps>}></Route>
         <Route path="/steps">
           <Route path="add" element={<AddStep></AddStep>}></Route>
-          <Route path="edit/:stepId" element={<EditStep></EditStep>}></Route>
+          <Route path='edit'>
+            <Route path=":stepId" element={<EditStep></EditStep>}></Route>
+          </Route>
         </Route>
         <Route path='/comments'>
-          <Route path='edit/:commentId' element={<EditComment></EditComment>}></Route>
+          <Route path='edit'>
+            <Route path=':commentId' element={<EditComment></EditComment>}></Route>
+          </Route>
         </Route>
       </Routes>
     </div>

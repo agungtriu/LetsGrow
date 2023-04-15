@@ -22,6 +22,8 @@ import UpdatePassword from "./User/UpdatePassword"
 import UpdateAvatar from "./User/UpdateAvatar"
 import Login from "./User/Login"
 import SignUp from "./User/SignUp"
+//
+import Loading from "./Loading"
 
 export {
     ListComment,EditComment,
@@ -29,5 +31,6 @@ export {
     ListPlant,AddPlant,EditPlant,
     Steps,AddStep,EditStep,
     Tutorial,ListTutorial,
-    ListProfile,Login,SignUp,UpdateProfile,UpdatePassword,UpdateAvatar
+    ListProfile,Login,SignUp,UpdateProfile,UpdatePassword,UpdateAvatar,
+    Loading
 }

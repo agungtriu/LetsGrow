@@ -1,36 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { addPlants } from '../../axios/plantAxios'
 
 const AddPlant = () => {
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    image: null,
+    type: ''
+  })
+
+  const navigate = useNavigate()
+
+  const submitHandler = () => {
+    addPlants(form)
+    navigate('/plants')
+  }
   return (
     <>
       <div className='bg-dark bg-opacity-10'>
-      <h4 className=' bg-dark text-white text-center'>Add Plant</h4>
+        <h4 className=' bg-dark text-white text-center'>Add Plant</h4>
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-sm-6">
               <div className="bg-light p-3 rounded">
                 <form>
                   <div className="mb-3">
-                    <label for="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" />
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" onChange={(e) => setForm({...form, name: e.target.value})}/>
                   </div>
                   <div className="mb-3">
-                    <label for="description" className="form-label">Description</label>
-                    <textarea className="form-control" id="description"></textarea>
+                    <label htmlFor="description" className="form-label">Description</label>
+                    <textarea className="form-control" id="description" onChange={(e) => setForm({...form, description: e.target.value})}></textarea>
                   </div>
                   <div className="mb-3">
-                    <label for="image" className="form-label">Image</label>
-                    <input type="file" className="form-control" id="image" />
+                    <label htmlFor="image" className="form-label">Image</label>
+                    <input type="file" className="form-control" id="image" onChange={(e) => setForm({...form, image: e.target.value})}/>
                   </div>
                   <div className="mb-3">
-                    <label for="type" className="form-label">Type</label>
-                    <select className="form-control" id="type">
-                      <option value="type1">Type 1</option>
-                      <option value="type2">Type 2</option>
-                      <option value="type3">Type 3</option>
+                    <label htmlFor="type" className="form-label">Type</label>
+                    <select className="form-control" id="type" onChange={(e) => setForm({...form, type: e.target.value})}>
+                      <option value="type1">Indoor Plant</option>
+                      <option value="type2">Outdoor Plant</option>
+                      <option value="type3">Other</option>
                     </select>
                   </div>
-                  <button type="submit" className="btn btn-primary">Submit</button>
+                  <button type="submit" className="btn btn-primary" onClick={() => submitHandler()}>Submit</button>
                 </form>
               </div>
             </div>
