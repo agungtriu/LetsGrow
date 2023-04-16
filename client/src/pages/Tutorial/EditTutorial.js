@@ -13,7 +13,7 @@ const EditTutorial = () => {
     description: "",
     image: "",
     plantId: 0,
-    plant: "",
+    plantName: "",
   });
 
   const [file, setFile] = useState(null);
@@ -28,6 +28,7 @@ const EditTutorial = () => {
         description: result.description,
         image: result.image,
         plantId: result.plantId,
+        plantName: result.plantName,
       });
     });
   };
@@ -40,12 +41,11 @@ const EditTutorial = () => {
 
   let plantOptions = [];
 
-  plants?.map((plant) => {
+  plants?.forEach((plant) => {
     plantOptions.push({
       value: plant.id,
       label: plant.name,
     });
-    return plant;
   });
 
   const submitHandler = () => {
@@ -84,7 +84,7 @@ const EditTutorial = () => {
             <label htmlFor="floatingName">Name</label>
           </div>
           <div className="form-floating mb-3">
-            <input
+            <textarea
               value={form.description}
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
@@ -113,10 +113,10 @@ const EditTutorial = () => {
           <div className="mb-3">
             <label>Plant</label>
             <Select
-              value={{ value: form.plantId, label: form.userName }}
+              value={{ value: form.plantId, label: form.plantName }}
               options={plantOptions}
               onChange={(e) => {
-                setForm({ ...form, userId: +e.value, userName: e.label });
+                setForm({ ...form, plantId: +e.value, plantName: e.label });
               }}
             />
           </div>

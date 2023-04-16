@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { faKey, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "../../axios/userAxios";
-import ListPlant from "../Plant/ListPlant";
 import ListTutorial from "../Tutorial/ListTutorial";
 
 const Profile = () => {

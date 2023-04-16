@@ -9,6 +9,7 @@ const deleteBulkFile = require("../helpers/deleteBulkFile");
 const tutorial = models.tutorial;
 const step = models.step;
 const comment = models.comment;
+const plant = models.plant;
 
 class TutorialController {
   static async getTutorials(req, res) {
@@ -33,10 +34,13 @@ class TutorialController {
         where: { id },
         include: [step, comment],
       });
+      const _plant = await plant.findOne({
+        where: { id: +result.dataValues.plantId },
+      });
       if (result !== null) {
         res.status(200).json({
           status: true,
-          data: result,
+          data: { ...result.dataValues, plantName: _plant.dataValues.name },
         });
       } else {
         res.status(404).json({

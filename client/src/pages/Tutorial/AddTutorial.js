@@ -69,7 +69,7 @@ const AddTutorial = () => {
             <label htmlFor="floatingName">Name</label>
           </div>
           <div className="form-floating mb-3">
-            <input
+            <textarea
               value={form.description}
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
@@ -78,7 +78,7 @@ const AddTutorial = () => {
               className="form-control"
               id="floatingDescription"
             />
-            <label htmlFor="floatingDescription">Caption</label>
+            <label htmlFor="floatingDescription">Description</label>
           </div>
 
           <div className="mb-3">
@@ -98,10 +98,9 @@ const AddTutorial = () => {
           <div className="mb-3">
             <label>Plant</label>
             <Select
-              value={{ value: form.plantId, label: form.userName }}
               options={plantOptions}
               onChange={(e) => {
-                setForm({ ...form, userId: +e.value, userName: e.label });
+                setForm({ ...form, plantId: +e.value, plant: e.label });
               }}
             />
           </div>

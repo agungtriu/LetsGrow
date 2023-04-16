@@ -38,7 +38,7 @@ const AddStep = () => {
         <div className="w-50 mx-auto">
           <hr />
           <div className="form-floating mb-3">
-            <input
+            <textarea
               value={form.description}
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
