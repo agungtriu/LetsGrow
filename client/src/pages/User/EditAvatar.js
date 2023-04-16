@@ -9,6 +9,7 @@ const EditAvatar = () => {
   useEffect(() => {
     setAvatar(localStorage.avatar);
   }, []);
+  console.log(avatar)
 
   const navigation = useNavigate();
 

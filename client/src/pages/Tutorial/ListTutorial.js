@@ -4,13 +4,27 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
 import Loading from '../Loading'
+import { imageUrl } from '../../config/config'
 
 const ListTutorial = () => {
     const [tutorials, setTutorials] = useState([])
 
-    useEffect(() => {
-        getTutorials(result => setTutorials(result))
-    }, [])
+  const getAll = () => {
+    getTutorials(result => {
+      setTutorials(result.map(tutorial =>({
+        id : tutorial.id,
+        name: tutorial.name,
+        description : tutorial.description,
+        image : `${imageUrl}${tutorial.image}`,
+        userId : tutorial.userId,
+        plantId : tutorial.plantId
+      })))
+    })
+  }
+
+  useEffect(() => {
+    getAll()
+  }, [])
     return (
         <>
             <div className='mx-auto row'>

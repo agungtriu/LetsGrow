@@ -1,20 +1,37 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addPlants } from '../../axios/plantAxios'
+import Swal from "sweetalert2";
 
 const AddPlant = () => {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    image: null,
-    type: ''
+    type: '',
+    image:''
   })
+  const [file, setFile] = useState(null)
+
+
 
   const navigate = useNavigate()
 
   const submitHandler = () => {
-    addPlants(form)
-    navigate('/plants')
+    if (file !== null) {
+      const fromData = new FormData();
+      fromData.append("name",form.name)
+      fromData.append("description",form.description)
+      fromData.append("image", file)
+      fromData.append("type", form.type)
+
+      addPlants(fromData, (status) => {
+        if (status) {
+          navigate('/plants')
+        }
+      })
+    }  else {
+      Swal.fire("Plant Image", "cannot be empty", "error");
+    }
   }
   console.log(form)
   return (
@@ -36,7 +53,10 @@ const AddPlant = () => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="image" className="form-label">Image</label>
-                    <input type="file" className="form-control" id="image" onChange={(e) => setForm({...form, image: e.target.value})}/>
+                    <input type="file" className="form-control" id="image" 
+                    onChange={(e) => {
+                      setFile(e.target.files[0])
+                    }}/>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="type" className="form-label">Type</label>

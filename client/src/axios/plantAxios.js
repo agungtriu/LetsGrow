@@ -33,16 +33,18 @@ const getPlantsById = async (id, cb) => {
 
 }
 
-const addPlants = async (plant) => {
+const addPlants = async (plant, cb) => {
     try {
         let plants = await axios({
             method: "POST",
             url: URL + "add",
             data: plant,
             headers: {
+                "Content-Type": "multipart/form-data",
                 access_token: localStorage.access_token,
               },
         })
+        cb(true)
         console.log(plants.data.data)
 
     } catch (err) {
@@ -56,7 +58,11 @@ const editPlants = async (id, plant) => {
         let plants = await axios({
             method: "PUT",
             url: URL + "edit/" + id,
-            data: plant
+            data: plant,
+            headers: {
+                "Content-Type": "multipart/form-data",
+                access_token: localStorage.access_token,
+              }
         })
         Swal.fire(
             'Edit plants' + id,
@@ -64,6 +70,7 @@ const editPlants = async (id, plant) => {
             'success'
         )
         console.log(plants.data.data)
+        localStorage.setItem("image", plants.data.data.image)
     } catch (err) {
         console.log(err)
     }
@@ -73,7 +80,10 @@ const deletePlant = async (id) => {
     try {
         let plants = await axios({
             method: "GET",
-            url: URL + "delete/" + id
+            url: URL + "delete/" + id,
+            headers: {
+                access_token: localStorage.access_token,
+              }
         })
         Swal.fire({
             title: 'Are you sure?',

@@ -1,41 +1,50 @@
-import React, { useEffect, useState } from 'react'
-import { editPlants, getPlantsById } from '../../axios/plantAxios'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { getPlantsById, editPlants } from '../../axios/plantAxios'
+import Swal from "sweetalert2";
 
 const EditPlant = () => {
+  let params = useParams()
+  let id = params.plantId
+
+  
   const [form, setForm] = useState({
+    id: '',
     name: '',
     description: '',
-    image: null,
     type: ''
   })
-
+  const [file, setFile] = useState(null)
+  
   const navigate = useNavigate()
-  const params = useParams()
-
-  const getPlantKey = () => {
-    const { id } = params
-    getPlantsById(+id, result => {
-        setForm({
-          name: result.name,
-          description: result.description,
-          image: result.image,
-          type: result.type
-        })
-
-    })
-
-}
-
   useEffect(() => {
-    getPlantKey()
-  })
+    getPlantsById(id, (data) => {
+      setForm({
+        name: data.name,
+        description: data.description,
+        type: data.type
+      })
+    })
+  }, [id])
+  // console.log(id)
 
   const submitHandler = () => {
-    editPlants(+params.id,form)
-    navigate('/plants')
-  }
+    if (file !== null) {
+      const fromData = new FormData();
+      fromData.append("name", form.name)
+      fromData.append("description", form.description)
+      fromData.append("image", file)
+      fromData.append("type", form.type)
 
+      editPlants(id, fromData, (status, image) => {
+        if (status) {
+          navigate('/plants')
+        }
+      })
+    } else {
+      Swal.fire("Plant Image", "cannot be empty", "error");
+    }
+  }
 
   return (
     <>
@@ -48,19 +57,22 @@ const EditPlant = () => {
                 <form>
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name"/>
+                    <input type="text" className="form-control" id="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea className="form-control" id="description"></textarea>
+                    <textarea className="form-control" id="description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}></textarea>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="image" className="form-label">Image</label>
-                    <input type="file" className="form-control" id="image" />
+                    <input type="file" className="form-control" id="image"
+                      onChange={(e) => {
+                        setFile(e.target.files[0])
+                      }} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="type" className="form-label">Type</label>
-                    <select className="form-control" id="type">
+                    <select className="form-control" id="type" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
                       <option value="type1">Indoor Plant</option>
                       <option value="type2">Outdoor Plant</option>
                       <option value="type3">Other</option>
@@ -73,7 +85,6 @@ const EditPlant = () => {
           </div>
         </div>
       </div>
-
     </>
   )
 }

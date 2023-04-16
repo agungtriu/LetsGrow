@@ -47,6 +47,9 @@ const MainContent = (props) => {
         <Route path="/plants" element={<ListPlant></ListPlant>}></Route>
         <Route path="/plants">
           <Route path='add' element={<AddPlant></AddPlant>}></Route>
+          <Route path='delete'>
+            <Route path=':plantId' element={<ListPlant></ListPlant>}></Route>
+          </Route>
           <Route path='edit'>
             <Route path=':plantId' element={<EditPlant></EditPlant>}></Route>
           </Route>

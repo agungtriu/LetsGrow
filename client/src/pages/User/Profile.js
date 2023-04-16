@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { faKey, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "../../axios/userAxios";
-import ListPlant from "../Plant/ListPlant";
 
 const Profile = () => {
   const [user, setUser] = useState({
@@ -128,7 +127,6 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <ListPlant></ListPlant>
       </div>
     </>
   );
