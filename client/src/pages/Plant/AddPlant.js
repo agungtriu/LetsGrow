@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addPlants } from '../../axios/plantAxios'
 
 const AddPlant = () => {
@@ -14,7 +14,7 @@ const AddPlant = () => {
 
   const submitHandler = () => {
     addPlants(form)
-    navigate('/plants')
+    navigate(-1)
   }
   console.log(form)
   return (
@@ -46,7 +46,7 @@ const AddPlant = () => {
                       <option value="type3">Other</option>
                     </select>
                   </div>
-                  <button type="submit" className="btn btn-primary" onClick={() => submitHandler()}>Submit</button>
+                  <Link type="submit" className="btn btn-primary" onClick={() => submitHandler()}>Submit</Link>
                 </form>
               </div>
             </div>
