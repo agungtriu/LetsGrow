@@ -1,66 +1,138 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { editTutorial, getTutorialById } from "../../axios/tutorialAxios";
+import { getPlants } from "../../axios/plantAxios";
+import Swal from "sweetalert2";
+import Select from "react-select";
 
 const EditTutorial = () => {
-    return (
-        <>
-            <div className='bg-dark bg-opacity-10'>
-                <h4 className=' bg-dark text-white text-center'>Add Tutorial</h4>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-sm-6">
-                            <div className="bg-light p-3 rounded">
-                                <form>
-                                    <div className="mb-3">
-                                        <label htmlFor="name" className="form-label">Name</label>
-                                        <input type="text" className="form-control" id="name"
-                                        // onChange={(e) => setForm({...form, name: e.target.value})}
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="description" className="form-label">Description</label>
-                                        <textarea className="form-control" id="description"
-                                        // onChange={(e) => setForm({...form, description: e.target.value})}
-                                        ></textarea>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="image" className="form-label">Image</label>
-                                        <input type="file" className="form-control" id="image"
-                                        // onChange={(e) => setForm({...form, image: e.target.value})}
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="type" className="form-label">Username</label>
-                                        <select className="form-control" id="type"
-                                        // onChange={(e) => setForm({...form, type: e.target.value})}
-                                        >
-                                            <option value="type1">Indoor Plant</option>
-                                            <option value="type2">Outdoor Plant</option>
-                                            <option value="type3">Other</option>
-                                        </select>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="type" className="form-label">Plant</label>
-                                        <select className="form-control" id="type"
-                                        // onChange={(e) => setForm({...form, type: e.target.value})}
-                                        >
-                                            <option value="PlantId">Indoor Plant</option>
-                                            <option value="type2">Outdoor Plant</option>
-                                            <option value="type3">Other</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" className="btn btn-primary"
-                                    // onClick={() => submitHandler()}
-                                    >Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  const [form, setForm] = useState({
+    id: 0,
+    name: "",
+    description: "",
+    image: "",
+    plantId: 0,
+    plantName: "",
+  });
 
+  const [file, setFile] = useState(null);
+  const params = useParams();
+  const navigation = useNavigate();
+  const getTutorial = () => {
+    const id = params.tutorialId;
+    getTutorialById(id, (result) => {
+      setForm({
+        id: result.id,
+        name: result.name,
+        description: result.description,
+        image: result.image,
+        plantId: result.plantId,
+        plantName: result.plantName,
+      });
+    });
+  };
+  const [plants, setPlants] = useState([]);
 
-        </>
-    )
-}
+  useEffect(() => {
+    getTutorial();
+    getPlants((result) => setPlants(result));
+  }, []);
 
-export default EditTutorial
+  let plantOptions = [];
+
+  plants?.forEach((plant) => {
+    plantOptions.push({
+      value: plant.id,
+      label: plant.name,
+    });
+  });
+
+  const submitHandler = () => {
+    if (file !== null) {
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("description", form.description);
+      formData.append("image", file);
+      formData.append("plantId", form.plantId);
+
+      editTutorial(form.id, formData, (status) => {
+        if (status) {
+          navigation(`/tutorials/detail/${form.id}`);
+        }
+      });
+    } else {
+      Swal.fire("Edit Tutorial", "file cannot be empty", "error");
+    }
+  };
+  return (
+    <>
+      <div className="row my-5">
+        <div className="w-100 text-center">
+          <h5>Edit Tutorial</h5>
+        </div>
+        <div className="w-50 mx-auto">
+          <hr />
+          <div className="form-floating mb-3">
+            <input
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              type="text"
+              className="form-control"
+              id="floatingName"
+            />
+            <label htmlFor="floatingName">Name</label>
+          </div>
+          <div className="form-floating mb-3">
+            <textarea
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              type="text"
+              className="form-control"
+              id="floatingDescription"
+            />
+            <label htmlFor="floatingDescription">Description</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="formFile" className="form-label">
+              Upload Image: {form.image}
+            </label>
+            <input
+              className="form-control"
+              name="image"
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                setForm({ ...form, image: e.target.files[0].name });
+              }}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Plant</label>
+            <Select
+              value={{ value: form.plantId, label: form.plantName }}
+              options={plantOptions}
+              onChange={(e) => {
+                setForm({ ...form, plantId: +e.value, plantName: e.label });
+              }}
+            />
+          </div>
+
+          <div className="mb-3 text-center">
+            <button
+              onClick={() => submitHandler()}
+              className="btn btn-block btn-primary"
+            >
+              Submit Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default EditTutorial;

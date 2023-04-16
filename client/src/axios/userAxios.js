@@ -45,6 +45,26 @@ const getUserByUsername = async (username, cb) => {
     }
   }
 };
+const getUserById = async (id, cb) => {
+  try {
+    let result = await axios({
+      method: "GET",
+      url: URL + "id/" + id,
+    });
+
+    cb(result.data.data);
+  } catch (error) {
+    if (error.response.status === 500) {
+      Swal.fire(
+        "Error!",
+        error.response.data.error.errors[0].original.validatorArgs[0].message,
+        "error"
+      );
+    } else {
+      Swal.fire("Error!", error.response.data.message, "error");
+    }
+  }
+};
 const deleteUser = async (cb) => {
   try {
     let result = await axios({
@@ -54,7 +74,7 @@ const deleteUser = async (cb) => {
         access_token: localStorage.access_token,
       },
     });
-    cb(true)
+    cb(true);
     Swal.fire("Delete", result.data.message, "success");
   } catch (error) {
     if (error.response.status === 500) {
@@ -122,7 +142,6 @@ const editProfile = async (user, cb) => {
 };
 
 const editAvatar = async (image, cb) => {
-  console.log(image)
   try {
     let result = await axios({
       method: "PUT",
@@ -134,7 +153,7 @@ const editAvatar = async (image, cb) => {
       },
     });
     cb(true, result.data.data.image);
-    localStorage.setItem("avatar", result.data.data.image);
+    localStorage.setItem("image", result.data.data.image);
     Swal.fire("Edit Avatar", result.data.message, "success");
   } catch (error) {
     if (error.response.status === 500) {
@@ -163,10 +182,11 @@ const loginUser = async (user, cb) => {
       });
       Swal.fire("Login", result.data.message, "success");
       localStorage.setItem("access_token", result.data.data.access_token);
+      localStorage.setItem("id", result.data.data.id);
       localStorage.setItem("username", result.data.data.username);
-      localStorage.setItem("avatar", result.data.data.image);
+      localStorage.setItem("image", result.data.data.image);
       localStorage.setItem("role", result.data.data.role);
-      cb(true);
+      cb({ status: true, data: result.data.data });
     } catch (error) {
       if (error.response.status === 500) {
         Swal.fire(
@@ -207,6 +227,7 @@ const registerUser = async (user, cb) => {
 export {
   getUsers,
   getUserByUsername,
+  getUserById,
   deleteUser,
   editProfile,
   editPassword,

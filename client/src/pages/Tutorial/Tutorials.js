@@ -1,26 +1,25 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getTutorials } from "../../axios/tutorialAxios";
 import Loading from "../Loading";
 import { imageUrl } from "../../config/config";
 
-const ListTutorial = (props) => {
+const Tutorials = () => {
+  const [tutorials, setTutorials] = useState([]);
+
+  useEffect(() => {
+    getTutorials((result) => setTutorials(result));
+  }, []);
   const navigation = useNavigate();
   const clickHandler = (id) => {
     navigation(`/tutorials/detail/${id}`);
   };
   return (
     <>
-      <div className="mx-auto row">
-        <Link className="btn btn-outline-dark" to="/tutorials/add">
-          Add Tutorial <FontAwesomeIcon icon={faPlus} />
-        </Link>
-      </div>
-      <div className="mt-3 mb-3">
+      <div className="container mt-3 mb-3">
         <div className="row">
-          {props.tutorials.length > 0 ? (
-            props.tutorials.map((tutorial) => {
+          {tutorials.length > 0 ? (
+            tutorials.map((tutorial) => {
               const truncatedDesc =
                 tutorial.description.length > 100
                   ? tutorial.description.substring(0, 100) + "..."
@@ -55,4 +54,4 @@ const ListTutorial = (props) => {
   );
 };
 
-export default ListTutorial;
+export default Tutorials;
