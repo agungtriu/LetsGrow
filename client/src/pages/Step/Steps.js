@@ -22,10 +22,10 @@ const Steps = (props) => {
         ? props.steps.map((step, index) => {
             return (
               <div key={step.id}>
-                <div className="card mb-3 position-relative">
+                <div className="card mb-2 position-relative">
                   <div className="row g-0">
                     <div className="col-md-4">
-                      <img
+                        <img
                         src={imageUrl + step.image}
                         className="img-fluid rounded-start"
                         alt={step.image}

@@ -18,7 +18,7 @@ const ListTutorial = (props) => {
         </Link>
       </div>
       <div className="mt-3 mb-3">
-        <div className="row">
+        <div className="row row-cols-1 row-cols-md-3 g-4">
           {props.tutorials.length > 0 ? (
             props.tutorials.map((tutorial) => {
               const truncatedDesc =
@@ -28,19 +28,18 @@ const ListTutorial = (props) => {
               return (
                 <div
                   onClick={() => clickHandler(tutorial.id)}
-                  className="col-md-4 mb-4"
-                  style={{ width: "20%" }}
+                  className="col mb-4"
                   key={tutorial.id}
                 >
-                  <div className="card">
+                  <div className="card h-100 border-0">
                     <img
-                      className="card-img-top"
+                      className="card-img-top h-75"
                       src={`${imageUrl}${tutorial.image}`}
                       alt={tutorial.image}
                     />
                     <div className="card-body">
-                      <h6>{tutorial.name}</h6>
-                      <small>{truncatedDesc}</small>
+                      <h6 className="card-title">{tutorial.name}</h6>
+                      <p className="card-text">{truncatedDesc}</p>
                     </div>
                   </div>
                 </div>
@@ -51,6 +50,7 @@ const ListTutorial = (props) => {
           )}
         </div>
       </div>
+
     </>
   );
 };
