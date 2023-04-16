@@ -10,7 +10,6 @@ const tutorial = models.tutorial;
 const step = models.step;
 const comment = models.comment;
 const plant = models.plant;
-const users = models.users
 
 class TutorialController {
   static async getTutorials(req, res) {
