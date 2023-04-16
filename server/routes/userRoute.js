@@ -5,6 +5,7 @@ const userRoutes = require("express").Router();
 userRoutes.get("/", UserController.getUsers);
 userRoutes.get("/delete", auth, UserController.delete);
 userRoutes.get("/:username", UserController.getUserByUsername);
+userRoutes.get("/id/:id", UserController.getUserById);
 userRoutes.post("/register", UserController.register);
 userRoutes.post("/login", UserController.login);
 userRoutes.put("/edit/password", auth, UserController.editPassword);

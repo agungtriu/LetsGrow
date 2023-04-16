@@ -31,7 +31,7 @@ class TutorialController {
       const id = +req.params.id;
       const result = await tutorial.findOne({
         where: { id },
-        include: [step],
+        include: [step, comment],
       });
       if (result !== null) {
         res.status(200).json({
