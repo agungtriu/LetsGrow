@@ -93,7 +93,7 @@ const EditTutorial = () => {
               className="form-control"
               id="floatingDescription"
             />
-            <label htmlFor="floatingDescription">Caption</label>
+            <label htmlFor="floatingDescription">Description</label>
           </div>
 
           <div className="mb-3">

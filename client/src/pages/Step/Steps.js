@@ -4,6 +4,8 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { deleteSteps } from "../../axios/stepAxios";
 import { imageUrl } from "../../config/config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Steps = (props) => {
   const navigation = useNavigate();
@@ -70,13 +72,14 @@ const Steps = (props) => {
           })
         : null}
       {+props.userId === +localStorage.id ? (
-        <div className="text-center">
+        <div className="mx-auto row">
           <Link
-            className="btn btn-primary"
+            className="btn btn-outline-dark"
             to={`/steps/add/${props.tutorialId}`}
           >
-            +
+            Add Step <FontAwesomeIcon icon={faPlus} />
           </Link>
+          <div className="mx-auto row"></div>
         </div>
       ) : null}
     </>

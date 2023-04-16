@@ -47,14 +47,19 @@ const getTutorialById = async (id, cb) => {
 
 const getTutorialsByKey = async () => {};
 
-const addTutorials = async (tutorial) => {
+const addTutorial = async (form, cb) => {
   try {
-    let tutorials = await axios({
-      method: "POST",
-      url: URL + "add",
-      data: tutorial,
-    });
-    console.log(tutorials.data.data);
+    let result = await axios({
+        method: "POST",
+        url: URL + "add",
+        data: form,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          access_token: localStorage.access_token,
+        },
+      });
+      cb(true);
+      Swal.fire("Add Tutorial", result.data.message, "success");
   } catch (err) {
     if (err.response.status === 500) {
       Swal.fire(
@@ -122,7 +127,7 @@ export {
   getTutorials,
   getTutorialById,
   getTutorialsByKey,
-  addTutorials,
+  addTutorial,
   editTutorial,
   deleteTutorial,
 };
