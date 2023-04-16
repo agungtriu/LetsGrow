@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FiLogOut, FiUser } from "react-icons/fi";
 import { imageUrl } from "../config/config";
@@ -6,29 +6,18 @@ import Swal from "sweetalert2";
 
 const BarMenu = (props) => {
   const { loginStatus, loginCbHandler } = props;
-  const [profile, setProfile] = useState({
-    avatar: "",
-    role: "",
-  });
-
-  useEffect(() => {
-    setProfile({
-      avatar: `${imageUrl}${localStorage.getItem("avatar")}`,
-      role: localStorage.getItem("role"),
-    });
-  }, []);
-
   const logoutHandler = () => {
     localStorage.clear();
-    loginCbHandler(false);
+    loginCbHandler({ status: false, data: {} });
     Swal.fire("Logout", "logout successful", "success");
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            Lets Grow 🌱
+            LetsGrow 🌱
           </Link>
 
           <button
@@ -42,11 +31,19 @@ const BarMenu = (props) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <input className="form-control pd-3 me-2" type="search" placeholder="Search" aria-label="Search" />
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+            <ul className="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
+              <li>
+                {/* <input
+                  className="form-control mt-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                /> */}
+              </li>
+            </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
-              {profile.role === "admin" ? (
+              {loginStatus.data.role === "admin" ? (
                 <li className="nav-item">
                   <Link className="nav-link active" to="/plants">
                     Plants
@@ -54,16 +51,11 @@ const BarMenu = (props) => {
                 </li>
               ) : null}
               <li className="nav-item">
-                <Link className="nav-link active" to="/tutorials">
-                  Tutorial
-                </Link>
-              </li>
-              <li className="nav-item">
-                {loginStatus ? (
+                {loginStatus.status ? (
                   <div className="dropdown m-1">
                     <img
                       className="rounded-circle avatar-mini"
-                      src={profile.avatar}
+                      src={`${imageUrl}${loginStatus.data.image}`}
                       alt=""
                     />
                     <ul className="dropdown-menu">

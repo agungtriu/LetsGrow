@@ -10,14 +10,14 @@ const Login = (props) => {
   });
 
   const { loginCbHandler } = props;
-  const loginHandler = () => {
-    loginCbHandler(true);
+  const loginHandler = (result) => {
+    loginCbHandler(result);
   };
   const navigation = useNavigate();
   const submitHandler = () => {
-    loginUser(form, (status) => {
-      if (status) {
-        loginHandler();
+    loginUser(form, (result) => {
+      if (result.status) {
+        loginHandler(result);
         navigation("/");
       }
     });

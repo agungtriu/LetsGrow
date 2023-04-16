@@ -1,37 +1,86 @@
-import React from 'react'
-import { images } from '../../images'
-import { Link } from 'react-router-dom'
-import ListComment from '../Comment/ListComment'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons'
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BsInfoCircleFill } from "react-icons/bs";
+import { deleteSteps } from "../../axios/stepAxios";
+import { imageUrl } from "../../config/config";
 
-const Steps = () => {
+const Steps = (props) => {
+  const navigation = useNavigate();
+  const deleteHandler = (id) => {
+    deleteSteps(id, (status) => {
+      if (status) {
+        navigation("/tutorials/detail/" + props.tutorialId);
+      }
+    });
+  };
   return (
     <>
-      <div className='container-fluid'>
-        <Link className='btn btn-outline-dark mb-2' to='/steps/add'>Add Plant <FontAwesomeIcon icon={faPlus} /></Link>
-      </div>
-      <div className='container-sm '>
-        <div className='row'>
-          <div className='col card p-0'>
-            <img src={images.Corn} class="rounded float-start" alt="..." style={{ width: "100%" }} />
-          </div>
-          <div class="card me-2" style={{ width: "36rem" }}>
-            <div className='d-flex justify-content-end'>
-              <Link className='btn btn-sm btn-outline-dark me-2' to='/steps/delete/:stepId'><FontAwesomeIcon icon={faTrash} style={{ color: "#e60505", }} /></Link>
-              <Link className='btn btn-sm btn-outline-dark ' to='/steps/edit/:stepId'><FontAwesomeIcon icon={faPen} /></Link>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <button class="btn btn-light"><FontAwesomeIcon icon={faHeart} style={{ color: "#e60505", }} /></button>
-            </div>
-          </div>
+      {props.steps.length > 0
+        ? props.steps.map((step, index) => {
+            return (
+              <div key={step.id}>
+                <div className="card mb-3 position-relative">
+                  <div className="row g-0">
+                    <div className="col-md-4">
+                      <img
+                        src={imageUrl + step.image}
+                        className="img-fluid rounded-start"
+                        alt={step.image}
+                      />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <p className="card-text">
+                          {index + 1 + ". " + step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {+props.userId === +localStorage.id ? (
+                    <span className="position-absolute top-0 end-0">
+                      <div className="dropdown m-2">
+                        <BsInfoCircleFill />
+                        <ul className="dropdown-menu">
+                          <li>
+                            <Link
+                              className="dropdown-item "
+                              onClick={() => deleteHandler(+step.id)}
+                            >
+                              <AiFillDelete />
+                              <span className="m-3">Delete</span>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              className="dropdown-item"
+                              to={`/steps/edit/${step.id}`}
+                            >
+                              <AiFillEdit />
+                              <span className="ms-3">Edit</span>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })
+        : null}
+      {+props.userId === +localStorage.id ? (
+        <div className="text-center">
+          <Link
+            className="btn btn-primary"
+            to={`/steps/add/${props.tutorialId}`}
+          >
+            +
+          </Link>
         </div>
-        <ListComment></ListComment>
-      </div>
+      ) : null}
     </>
-  )
-}
+  );
+};
 
-export default Steps
+export default Steps;
