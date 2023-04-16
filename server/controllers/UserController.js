@@ -51,6 +51,31 @@ class UserController {
       });
     }
   }
+  static async getUserById(req, res) {
+    try {
+      const id = req.params.id;
+      const result = await user.findOne({
+        where: { id },
+        include: [profile],
+      });
+      if (result !== null) {
+        res.status(200).json({
+          status: true,
+          data: result,
+        });
+      } else {
+        res.status(404).json({
+          status: false,
+          message: "account not found!",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: false,
+        error: error,
+      });
+    }
+  }
   static async register(req, res) {
     try {
       const { username, name, email, password, confirmPassword } = req.body;
@@ -112,6 +137,7 @@ class UserController {
             status: true,
             message: "login successful",
             data: {
+              id: result.id,
               username: result.username,
               image: result.profile.avatar,
               role: result.role,

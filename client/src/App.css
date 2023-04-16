@@ -20,19 +20,29 @@ body {
   pointer-events: none;
 }
 
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
 .avatar-mini {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.301);
-  z-index: 1;
+#page-container {
+  position: relative;
+  min-height: 72vh;
 }
 
+#content-wrap {
+  padding-bottom: 2.5rem; /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem; /* Footer height */
+}

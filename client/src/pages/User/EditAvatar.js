@@ -7,7 +7,7 @@ const EditAvatar = () => {
   const [avatar, setAvatar] = useState();
   const [file, setFile] = useState(null);
   useEffect(() => {
-    setAvatar(localStorage.avatar);
+    setAvatar(localStorage.image);
   }, []);
   console.log(avatar)
 

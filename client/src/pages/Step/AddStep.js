@@ -1,38 +1,82 @@
-import React from 'react'
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { addStep } from "../../axios/stepAxios";
+import Swal from "sweetalert2";
 
 const AddStep = () => {
+  const [form, setForm] = useState({
+    description: "",
+    image: "",
+  });
+
+  const [file, setFile] = useState();
+  const params = useParams();
+  const navigation = useNavigate();
+
+  const submitHandler = () => {
+    if (file !== null) {
+      const formData = new FormData();
+      formData.append("description", form.description);
+      formData.append("image", file);
+      formData.append("tutorialId", params.tutorialId);
+
+      addStep(formData, (status) => {
+        if (status) {
+          navigation(`/tutorials/detail/${params.tutorialId}`);
+        }
+      });
+    } else {
+      Swal.fire("Add Step", "file cannot be empty", "error");
+    }
+  };
   return (
     <>
-      <div className='bg-dark bg-opacity-10'>
-        <h4 className=' bg-dark text-white text-center'>Add Steps</h4>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-sm-6">
-              <form style={{ background: '#f2f2f2', padding: '20px' }}>
-                <div className="mb-3">
-                  <label htmlFor="image">Image:</label>
-                  <input type="file" className="form-control" id="image" />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description">Description:</label>
-                  <textarea className="form-control" id="description" rows="3"></textarea>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="TutorialName">Tutorial Name:</label>
-                  <input type="text" className="form-control" id="TutorialName" />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="UserID">User ID:</label>
-                  <input type="text" className="form-control" id="UserID" />
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
-              </form>
-            </div>
+      <div className="row my-5">
+        <div className="w-100 text-center">
+          <h5>Add Step</h5>
+        </div>
+        <div className="w-50 mx-auto">
+          <hr />
+          <div className="form-floating mb-3">
+            <textarea
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              type="text"
+              className="form-control"
+              id="floatingDescription"
+            />
+            <label htmlFor="floatingDescription">Caption</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="formFile" className="form-label">
+              Upload Image: {form.image}
+            </label>
+            <input
+              className="form-control"
+              name="image"
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                setForm({ ...form, image: e.target.files[0].name });
+              }}
+            />
+          </div>
+
+          <div className="mb-3 text-center">
+            <button
+              onClick={() => submitHandler()}
+              className="btn btn-block btn-primary"
+            >
+              Submit Changes
+            </button>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AddStep
+export default AddStep;

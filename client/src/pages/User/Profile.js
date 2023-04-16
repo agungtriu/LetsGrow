@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { faKey, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "../../axios/userAxios";
+import ListTutorial from "../Tutorial/ListTutorial";
 
 const Profile = () => {
   const [user, setUser] = useState({
@@ -13,6 +14,7 @@ const Profile = () => {
     avatar: "",
     phone: "",
     address: "",
+    tutorials: [],
   });
 
   const getUser = () => {
@@ -25,6 +27,7 @@ const Profile = () => {
         avatar: `${imageUrl}${result.profile.avatar}`,
         phone: result.profile.phone,
         address: result.profile.address,
+        tutorials: result.tutorials,
       });
     });
   };
@@ -36,11 +39,11 @@ const Profile = () => {
   return (
     <>
       <div className="container">
-        <div className="card mb-3">
+        <div className="card mb-3 mt-5">
           <div className="row g-0">
             <div className="col-md-4">
               <div className="card">
-                <img src={user.avatar} className="rounded-start" alt="..." />
+                <img src={user.avatar} className="rounded-start ms-auto me-auto" style={{ width: "50%" }} alt="..." />
                 <div className="card-body">
                   <h5 className="text-center">{user.username}</h5>
                   <div className="row row-cols-auto d-flex justify-content-center">
@@ -90,7 +93,7 @@ const Profile = () => {
                 <div className="container text center">
                   <div className="row row-cols-2">
                     {user.name !== null && user.name !== "" ? (
-                      <div className="col my-5">
+                      <div className="col my-3">
                         <label>Name</label>
                         <div className="input-group flex-nowrap">
                           {user.name}
@@ -98,7 +101,7 @@ const Profile = () => {
                       </div>
                     ) : null}
                     {user.phone !== null && user.phone !== "" ? (
-                      <div className="col my-5">
+                      <div className="col my-3">
                         <label>Phone</label>
                         <div className="input-group flex-nowrap">
                           {user.phone}
@@ -106,7 +109,7 @@ const Profile = () => {
                       </div>
                     ) : null}
                     {user.address !== null && user.address !== "" ? (
-                      <div className="col my-5">
+                      <div className="col my-3">
                         <label>Address</label>
                         <div className="input-group flex-nowrap">
                           {user.address}
@@ -114,7 +117,7 @@ const Profile = () => {
                       </div>
                     ) : null}
                     {user.email !== null && user.email !== "" ? (
-                      <div className="col my-5">
+                      <div className="col my-3">
                         <label>Email</label>
                         <div className="input-group flex-nowrap">
                           {user.email}
@@ -127,6 +130,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <ListTutorial tutorials={user.tutorials}></ListTutorial>
       </div>
     </>
   );

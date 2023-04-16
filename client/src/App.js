@@ -5,20 +5,30 @@ import "bootstrap/dist/js/bootstrap.js";
 import { BarMenu, MainContent } from "./components";
 
 function App() {
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [loginStatus, setLoginStatus] = useState({
+    status: false,
+    data: {},
+  });
   const loginCbHandler = (result) => {
     setLoginStatus(result);
   };
   useState(() => {
     if (localStorage.getItem("access_token")) {
-      setLoginStatus(true);
+      setLoginStatus({
+        status: true,
+        data: {
+          username: localStorage.username,
+          image: localStorage.image,
+          role: localStorage.role,
+        },
+      });
     } else {
-      setLoginStatus(false);
+      setLoginStatus({ status: false, data: {} });
     }
   });
   return (
     <>
-      <div className="main-page">
+      <div>
         <BarMenu
           loginStatus={loginStatus}
           loginCbHandler={loginCbHandler}
