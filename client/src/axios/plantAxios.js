@@ -89,7 +89,7 @@ const editPlants = async (id, plant) => {
       'success'
     )
     console.log(plants.data.data)
-    localStorage.setItem("image", plants.data.data.image)
+    // localStorage.setItem("image", plants.data.data.image)
   } catch (err) {
     if (err.response.status === 500) {
       Swal.fire(

@@ -59,7 +59,7 @@ body {
 .box {
   width: 500px;
   margin: 0 10px;
-  box-shadow: 0 0 20px rgba(243, 243, 243, 0.6);
+  box-shadow: 0 0 20px rgba(29, 28, 28, 0.6);
   transition: 1s;
   
 }
@@ -73,4 +73,10 @@ body {
 .box:hover{
   transform: scale(1.3);
   z-index: 2;
+}
+
+.container-title {
+  background-color: rgba(0, 0, 0, 0.112);
+  padding: 10px;
+  border-radius: 30px;
 }

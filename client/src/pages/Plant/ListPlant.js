@@ -38,9 +38,6 @@ const ListPlant = () => {
   const indexOfLastPlant = currentPage * plantsPerPage
   const indexOfFirstPlant = indexOfLastPlant - plantsPerPage
   const currentPlants = plants.slice(indexOfFirstPlant, indexOfLastPlant)
-  console.log(indexOfLastPlant)
-  console.log(indexOfFirstPlant)
-  console.log(currentPlants)
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   return (
