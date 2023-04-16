@@ -1,16 +1,20 @@
-import React from 'react'
-import Tutorials from '../Tutorial/Tutorials'
-import Information from './Information'
+import React from "react";
+import Tutorials from "../Tutorial/Tutorials";
+import Information from "./Information";
 
 const HomePage = () => {
   return (
     <>
-      <div>
-        <Tutorials></Tutorials>
-        <Information></Information>
+      <div id="page-container">
+        <div id="content-wrap">
+          <Tutorials></Tutorials>
+        </div>
+        <div id="footer">
+          <Information></Information>
+        </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
