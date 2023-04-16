@@ -49,21 +49,21 @@ const BarMenu = (props) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
-              <li>
-                {/* <input
+              {/* <li>
+                <input
                   className="form-control mt-2"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                /> */}
-              </li>
+                />
+              </li> */}
             </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
               {loginStatus.data.role === "admin" ? (
                 <li className="nav-item">
-                  <Link className="nav-link active" to="/plants">
+                  {/* <Link className="nav-link active" to="/plants">
                     Plants
-                  </Link>
+                  </Link> */}
                 </li>
               ) : null}
               <li className="nav-item">
@@ -76,7 +76,7 @@ const BarMenu = (props) => {
                     />
                     <ul className="dropdown-menu">
                       <li>
-                        <Link className="dropdown-item " to={`/users/detail`}>
+                        <Link className="dropdown-item" to={`/users/detail`}>
                           {" "}
                           <FiUser /> <span className="m-3">Profile</span>{" "}
                         </Link>

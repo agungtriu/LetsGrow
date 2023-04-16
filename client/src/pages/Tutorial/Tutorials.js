@@ -104,7 +104,6 @@ const Tutorials = () => {
           </nav>
         </div>
       </div>
-
     </>
   );
 };

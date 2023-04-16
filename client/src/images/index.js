@@ -8,6 +8,8 @@ export const images = {
     Melati: require('./Melati.jpg'),
     Enceng: require('./Enceng.jpg'),
     avatar: require('./avatar.jpg'),
-    logo: require('./logo.jpg')
+    logo: require('./logo.jpg'),
+    Background: require('./Background.jpg')
+    
 
 }

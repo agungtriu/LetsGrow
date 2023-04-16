@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsInfoCircleFill } from "react-icons/bs";
@@ -6,9 +6,13 @@ import { deleteSteps } from "../../axios/stepAxios";
 import { imageUrl } from "../../config/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
+
 
 const Steps = (props) => {
   const navigation = useNavigate();
+  const [clickedIndex, setClickedIndex] = useState(false);
+
   const deleteHandler = (id) => {
     deleteSteps(id, (status) => {
       if (status) {
@@ -16,19 +20,38 @@ const Steps = (props) => {
       }
     });
   };
+
+  const handleClick = (index) => {
+    setClickedIndex(index);
+  };
+
+  const handleClose = () => {
+    setClickedIndex(false);
+  };
+
   return (
     <>
       {props.steps.length > 0
         ? props.steps.map((step, index) => {
             return (
-              <div key={step.id}>
-                <div className="card mb-2 position-relative">
-                  <div className="row g-0">
+              <div key={step.id} onClick={() => handleClick(index)}>
+                <motion.div
+                  className="card mb-2 position-relative"
+                  initial={{ scale: 1 }}
+                  animate={clickedIndex === index ? { scale: 1.1 } : { scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="row g-0"
+                    initial={{ opacity: 1 }}
+                    animate={clickedIndex === index ? { opacity: 1 } : { opacity: 0.75 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="col-md-4">
-                        <img
+                      <img
                         src={imageUrl + step.image}
                         className="img-fluid rounded-start"
-                        alt={step.image}
+                        alt="img"
                       />
                     </div>
                     <div className="col-md-8">
@@ -38,7 +61,7 @@ const Steps = (props) => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                   {+props.userId === +localStorage.id ? (
                     <span className="position-absolute top-0 end-0">
                       <div className="dropdown m-2">
@@ -66,7 +89,11 @@ const Steps = (props) => {
                       </div>
                     </span>
                   ) : null}
-                </div>
+                  {/* Tambahkan button untuk menutup pop out */}
+                  {clickedIndex === index && (
+                    <button className="btn-close position-absolute top-0 start-0" onClick={handleClose}></button>
+                  )}
+                </motion.div>
               </div>
             );
           })
@@ -87,3 +114,4 @@ const Steps = (props) => {
 };
 
 export default Steps;
+
