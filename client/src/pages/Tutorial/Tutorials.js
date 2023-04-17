@@ -63,7 +63,7 @@ const Tutorials = () => {
                       src={`${imageUrl}${tutorial.image}`}
                       alt={tutorial.image}
                       initial={{ opacity: 1 }}
-                      animate={{ x: [null, 100, 0] }}
+                      animate={{ y: [null, 100, 0] }}
                       transition={{ duration: 1 }}
                     />
                     <div className="card-body">
@@ -82,7 +82,7 @@ const Tutorials = () => {
             <Loading />
           )}
         </motion.div>
-        <div className="d-flex justify-content-center">
+        <div className=" d-flex justify-content-center">
           <nav aria-label="Page navigation example">
             <motion.ul 
             className="pagination"

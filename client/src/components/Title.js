@@ -18,7 +18,7 @@ const Title = () => {
                 
 
             >
-                Welcome Hero, now try to save our Earth
+               🌱 Welcome Hero, now try to save our Earth 🌱
             </motion.h2>
         </motion.div>
 
