@@ -26,7 +26,7 @@ import EditAvatar from "./User/EditAvatar"
 import Login from "./User/Login"
 import SignUp from "./User/SignUp"
 //
-import Loading from "./Loading"
+import Loading from "./dataEmpty"
 
 export {
     ListComment,EditComment,
