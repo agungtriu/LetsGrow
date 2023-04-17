@@ -123,7 +123,7 @@ const deletePlant = async (id, cb) => {
         cb(true)
         Swal.fire(
           'Deleted!',
-          `Your ${plants.data.message} been deleted.`,
+          `${plants.data.message}`,
           'success'
         )
       }
