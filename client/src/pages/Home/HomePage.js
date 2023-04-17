@@ -7,12 +7,10 @@ const HomePage = () => {
     <>
       <div id="page-container">
         <div id="content-wrap">
-          <div className="mx-auto">
-          </div>
           <Tutorials></Tutorials>
-        </div>
-        <div id="footer">
-          <Information></Information>
+          <div id="footer">
+            <Information></Information>
+          </div>
         </div>
       </div>
     </>
