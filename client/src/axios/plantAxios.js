@@ -72,7 +72,7 @@ const addPlant = async (plant, cb) => {
   }
 }
 
-const editPlant = async (id, plant) => {
+const editPlant = async (id, plant, cb) => {
   try {
     let plants = await axios({
       method: "PUT",
@@ -83,6 +83,7 @@ const editPlant = async (id, plant) => {
         access_token: localStorage.access_token,
       }
     })
+    cb(true)
     Swal.fire(
       'Edit plants' + id,
       plants.data.message,

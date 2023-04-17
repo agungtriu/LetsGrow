@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTutorials } from "../../axios/tutorialAxios";
-import Loading from "../Loading";
+import Loading from "../dataEmpty";
 import { imageUrl } from "../../config/config";
 import { motion } from "framer-motion";
+import ReactLoading from "react-loading";
 
 const Tutorials = () => {
   const [tutorials, setTutorials] = useState([]);
+  const [done, setDone] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [tutorialPerPage] = useState(3);
 
   useEffect(() => {
-    getTutorials((result) => setTutorials(result));
+    getTutorials((result) => {
+      setTutorials(result);
+      setDone(true);
+    });
   }, []);
   const navigation = useNavigate();
   const clickHandler = (id) => {
@@ -25,15 +30,19 @@ const Tutorials = () => {
   );
   const paginate = (num) => setCurrentPage(num);
 
-
   return (
     <>
-      <div className="container mt-2 mb-2">
-        <div
-          className="row row-cols-2 row-cols-md-3 g-4"
-          key={tutorials.id}
-        >
-          {currentTutorials.length > 0 ? (
+      <div className="container mt-3 mb-3">
+        <div className="row row-cols-2 row-cols-md-3 g-4" key={tutorials.id}>
+          {!done ? (
+            <ReactLoading
+              className="position-absolute top-50 start-50 translate-middle"
+              type={"spin"}
+              color={"#000000"}
+              height={100}
+              width={100}
+            />
+          ) : currentTutorials.length > 0 ? (
             currentTutorials.map((tutorial) => {
               const truncatedDesc =
                 tutorial.description.length > 100
@@ -47,7 +56,7 @@ const Tutorials = () => {
                 >
                   <motion.div
                     className="card h-100"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.01 }}
                   >
                     <img
                       className="card-img-top"
@@ -55,12 +64,8 @@ const Tutorials = () => {
                       alt={tutorial.image}
                     />
                     <div className="card-body">
-                      <h6 className="card-title">
-                        {tutorial.name}
-                      </h6>
-                      <p className="card-text">
-                        {truncatedDesc}
-                      </p>
+                      <h6 className="card-title">{tutorial.name}</h6>
+                      <p className="card-text">{truncatedDesc}</p>
                     </div>
                   </motion.div>
                 </motion.div>
@@ -69,29 +74,32 @@ const Tutorials = () => {
           ) : (
             <Loading />
           )}
-        </div >
+        </div>
         <div className=" d-flex justify-content-center my-2">
           <nav aria-label="Page navigation example">
-            <motion.ul
-              className="pagination"
-              whileHover={{ scale: 1.2 }}
-            >
-              {
-                Array.from({ length: Math.ceil(tutorials.length / tutorialPerPage) }, (_, index) => {
-                  const pageNumber = index + 1
+            <motion.ul className="pagination" whileHover={{ scale: 1.2 }}>
+              {Array.from(
+                { length: Math.ceil(tutorials.length / tutorialPerPage) },
+                (_, index) => {
+                  const pageNumber = index + 1;
                   return (
                     <>
-                      <li key={pageNumber} className="page-item"><button
-                        onClick={() => paginate(pageNumber)}
-                        className="page-link">{pageNumber}</button></li>
+                      <li key={pageNumber} className="page-item">
+                        <button
+                          onClick={() => paginate(pageNumber)}
+                          className="page-link"
+                        >
+                          {pageNumber}
+                        </button>
+                      </li>
                     </>
-                  )
-                })
-              }
+                  );
+                }
+              )}
             </motion.ul>
           </nav>
         </div>
-      </div >
+      </div>
     </>
   );
 };

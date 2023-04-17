@@ -8,6 +8,7 @@ import Steps from "../Step/Steps";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { addComment } from "../../axios/commentAxios";
+import ReactLoading from "react-loading";
 
 const Tutorial = () => {
   const [tutorial, setTutorial] = useState({
@@ -24,6 +25,7 @@ const Tutorial = () => {
     tutorialId: 0,
   });
 
+  const [done, setDone] = useState(false);
   const params = useParams();
   const getTutorial = () => {
     const { tutorialId } = params;
@@ -36,12 +38,13 @@ const Tutorial = () => {
         steps: result.steps,
         comments: result.comments,
         userId: result.userId,
-        plantName: result.plantName
+        plantName: result.plantName,
       });
       setComment({
         ...comment,
         tutorialId: result.id,
       });
+      setDone(true);
     });
   };
 
@@ -70,93 +73,104 @@ const Tutorial = () => {
     getTutorial();
   }, [location.key]);
 
-
   return (
     <>
       <div className="container">
-        <div className="mx-auto" style={{ width: "40%" }}>
-          <div className="container-img">
-            <div className="box">
-              <img
-                src={imageUrl + tutorial.image}
-                className="card-img "
-                alt={tutorial.image}
-              />
+        {!done ? (
+          <ReactLoading
+            className="position-absolute top-50 start-50 translate-middle"
+            type={"spin"}
+            color={"#000000"}
+            height={100}
+            width={100}
+          />
+        ) : (
+          <div>
+            <div className="mx-auto" style={{ width: "40%" }}>
+              <div className="container-img">
+                <div className="box">
+                  <img
+                    src={imageUrl + tutorial.image}
+                    className="card-img "
+                    alt={tutorial.image}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 position-relative">
+              <h5 className="text-center mt-3">{tutorial.name}</h5>
+              <h6 className="text-center"> {tutorial.plantName}</h6>
+              <p className="m-3">{tutorial.description}</p>
+
+              {+tutorial.userId === +localStorage.id ? (
+                <span className="position-absolute top-0 end-0">
+                  <div className="dropdown m-2">
+                    <BsInfoCircleFill />
+                    <ul className="dropdown-menu">
+                      <li>
+                        <Link
+                          className="dropdown-item "
+                          onClick={() => deleteHandler(+tutorial.id)}
+                        >
+                          <AiFillDelete />
+                          <span className="m-3">Delete</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={`/tutorials/edit/${tutorial.id}`}
+                        >
+                          <AiFillEdit />
+                          <span className="ms-3">Edit</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </span>
+              ) : null}
+            </div>
+            <div className="mt-5">
+              <Steps
+                steps={tutorial.steps}
+                userId={tutorial.userId}
+                tutorialId={tutorial.id}
+              ></Steps>
+            </div>
+            <div
+              className="scrollspy-example bg-black bg-opacity-10 p-4 my-2 rounded-2 mt-5"
+              tabIndex="0"
+            >
+              <h5>Comments</h5>
+              <ListComment
+                comments={tutorial.comments}
+                userId={tutorial.userId}
+                tutorialId={tutorial.id}
+              ></ListComment>
+              {localStorage.length > 0 ? (
+                <div>
+                  <textarea
+                    value={comment.text}
+                    onChange={(e) =>
+                      setComment({ ...comment, text: e.target.value })
+                    }
+                    className="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    placeholder="Add your comments"
+                  ></textarea>
+                  <button
+                    onClick={() => submitHandler()}
+                    type="submit"
+                    className="btn btn-warning mb-3 my-2"
+                  >
+                    Submit
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
-        </div>
-        <div className="mt-3 position-relative">
-          <h5 className="text-center mt-3">{tutorial.name}</h5>
-          <h6 className="text-center"> {tutorial.plantName}</h6>
-          <p className="m-3">{tutorial.description}</p>
-
-          {+tutorial.userId === +localStorage.id ? (
-            <span className="position-absolute top-0 end-0">
-              <div className="dropdown m-2">
-                <BsInfoCircleFill />
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link
-                      className="dropdown-item "
-                      onClick={() => deleteHandler(+tutorial.id)}
-                    >
-                      <AiFillDelete />
-                      <span className="m-3">Delete</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to={`/tutorials/edit/${tutorial.id}`}
-                    >
-                      <AiFillEdit />
-                      <span className="ms-3">Edit</span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </span>
-          ) : null}
-        </div>
-        <div className="mt-5">
-          <Steps
-            steps={tutorial.steps}
-            userId={tutorial.userId}
-            tutorialId={tutorial.id}
-          ></Steps>
-        </div>
-        <div
-          className="scrollspy-example bg-black bg-opacity-10 p-4 my-2 rounded-2 mt-5"
-          tabIndex="0"
-        >
-          <h5>Comments</h5>
-          <ListComment
-            comments={tutorial.comments}
-            userId={tutorial.userId}
-            tutorialId={tutorial.id}
-          ></ListComment>
-          {localStorage.length > 0 ? (
-            <div>
-              <textarea
-                value={comment.text}
-                onChange={(e) =>
-                  setComment({ ...comment, text: e.target.value })
-                }
-                className="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-                placeholder="Add your comments"
-              ></textarea>
-              <button
-                onClick={() => submitHandler()}
-                type="submit"
-                className="btn btn-warning mb-3 my-2"
-              >
-                Submit
-              </button>
-            </div>
-          ) : null}
-        </div>
+        )}
       </div>
     </>
   );

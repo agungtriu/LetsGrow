@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Loading from "../Loading";
+import Loading from "../dataEmpty";
 import { imageUrl } from "../../config/config";
 import { motion } from "framer-motion";
 
