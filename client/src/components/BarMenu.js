@@ -61,9 +61,9 @@ const BarMenu = (props) => {
             <ul className="navbar-nav mb-2 mb-lg-0">
               {loginStatus.data.role === "admin" ? (
                 <li className="nav-item">
-                  {/* <Link className="nav-link active" to="/plants">
+                  <Link className="nav-link active" to="/plants">
                     Plants
-                  </Link> */}
+                  </Link>
                 </li>
               ) : null}
               <li className="nav-item">

@@ -25,7 +25,7 @@ const getPlants = async (cb) => {
   }
 };
 
-const getPlantsById = async (id, cb) => {
+const getPlantById = async (id, cb) => {
   try {
     let plants = await axios({
       method: "GET",
@@ -45,7 +45,7 @@ const getPlantsById = async (id, cb) => {
   }
 };
 
-const addPlants = async (plant, cb) => {
+const addPlant = async (plant, cb) => {
   try {
     let plants = await axios({
       method: "POST",
@@ -57,7 +57,7 @@ const addPlants = async (plant, cb) => {
       },
     })
     cb(true)
-    console.log(plants.data.data)
+    Swal.fire("Add Plants", plants.data.message, "success");
 
   } catch (err) {
     if (err.response.status === 500) {
@@ -72,7 +72,7 @@ const addPlants = async (plant, cb) => {
   }
 }
 
-const editPlants = async (id, plant) => {
+const editPlant = async (id, plant) => {
   try {
     let plants = await axios({
       method: "PUT",
@@ -85,11 +85,9 @@ const editPlants = async (id, plant) => {
     })
     Swal.fire(
       'Edit plants' + id,
-      'Item' + id + ' has been updated',
+      plants.data.message,
       'success'
     )
-    console.log(plants.data.data)
-    // localStorage.setItem("image", plants.data.data.image)
   } catch (err) {
     if (err.response.status === 500) {
       Swal.fire(
@@ -103,7 +101,7 @@ const editPlants = async (id, plant) => {
   }
 };
 
-const deletePlants = async (id) => {
+const deletePlant = async (id,cb) => {
   try {
     let plants = await axios({
       method: "GET",
@@ -112,6 +110,7 @@ const deletePlants = async (id) => {
         access_token: localStorage.access_token,
       }
     })
+    cb(true)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -147,8 +146,8 @@ const deletePlants = async (id) => {
 
 export {
   getPlants,
-  addPlants,
-  editPlants,
-  deletePlants,
-  getPlantsById
+  addPlant,
+  editPlant,
+  deletePlant,
+  getPlantById
 };

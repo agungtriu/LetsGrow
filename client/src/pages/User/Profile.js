@@ -5,6 +5,7 @@ import { faKey, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getUserByUsername } from "../../axios/userAxios";
 import ListTutorial from "../Tutorial/ListTutorial";
+// import Loading from "../Loading";
 
 const Profile = () => {
   const [user, setUser] = useState({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getPlantsById, editPlants } from '../../axios/plantAxios'
+import { getPlantById,editPlant } from '../../axios/plantAxios';
 import Swal from "sweetalert2";
 
 const EditPlant = () => {
@@ -18,7 +18,7 @@ const EditPlant = () => {
   
   const navigate = useNavigate()
   useEffect(() => {
-    getPlantsById(id, (data) => {
+    getPlantById(id, (data) => {
       setForm({
         name: data.name,
         description: data.description,
@@ -36,7 +36,7 @@ const EditPlant = () => {
       fromData.append("image", file)
       fromData.append("type", form.type)
 
-      editPlants(id, fromData, (status, image) => {
+      editPlant(id, fromData, (status, image) => {
         if (status) {
           navigate('/plants')
         }

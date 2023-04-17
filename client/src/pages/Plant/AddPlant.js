@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { addPlants } from '../../axios/plantAxios'
+import { addPlant } from '../../axios/plantAxios';
 import Swal from "sweetalert2";
 
 const AddPlant = () => {
@@ -24,7 +24,7 @@ const AddPlant = () => {
       fromData.append("image", file)
       fromData.append("type", form.type)
 
-      addPlants(fromData, (status) => {
+      addPlant(fromData, (status) => {
         if (status) {
           Swal.fire({
             position: 'center',
