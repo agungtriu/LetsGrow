@@ -33,6 +33,11 @@ const AddTutorial = () => {
     return plant;
   });
 
+  plantOptions.push({
+    value: "link",
+    label: "Add Plant",
+  });
+
   const submitHandler = () => {
     if (file !== null) {
       const formData = new FormData();
@@ -100,7 +105,11 @@ const AddTutorial = () => {
             <Select
               options={plantOptions}
               onChange={(e) => {
-                setForm({ ...form, plantId: +e.value, plant: e.label });
+                if (e.value === "link") {
+                  navigation("/plants/add");
+                } else {
+                  setForm({ ...form, plantId: +e.value, plant: e.label });
+                }
               }}
             />
           </div>

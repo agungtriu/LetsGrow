@@ -8,7 +8,7 @@ const AddPlant = () => {
     name: '',
     description: '',
     type: '',
-    image:''
+    image: ''
   })
   const [file, setFile] = useState(null)
 
@@ -19,17 +19,26 @@ const AddPlant = () => {
   const submitHandler = () => {
     if (file !== null) {
       const fromData = new FormData();
-      fromData.append("name",form.name)
-      fromData.append("description",form.description)
+      fromData.append("name", form.name)
+      fromData.append("description", form.description)
       fromData.append("image", file)
       fromData.append("type", form.type)
 
       addPlants(fromData, (status) => {
         if (status) {
-          navigate('/plants')
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your Plant has been saved',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+          navigate(-1)
+        }
+        else {
         }
       })
-    }  else {
+    } else {
       Swal.fire("Plant Image", "cannot be empty", "error");
     }
   }
@@ -45,22 +54,22 @@ const AddPlant = () => {
                 <form>
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" onChange={(e) => setForm({...form, name: e.target.value})}/>
+                    <input type="text" className="form-control" id="name" onChange={(e) => setForm({ ...form, name: e.target.value })} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea className="form-control" id="description" onChange={(e) => setForm({...form, description: e.target.value})}></textarea>
+                    <textarea className="form-control" id="description" onChange={(e) => setForm({ ...form, description: e.target.value })}></textarea>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="image" className="form-label">Image</label>
-                    <input type="file" className="form-control" id="image" 
-                    onChange={(e) => {
-                      setFile(e.target.files[0])
-                    }}/>
+                    <input type="file" className="form-control" id="image"
+                      onChange={(e) => {
+                        setFile(e.target.files[0])
+                      }} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="type" className="form-label">Type</label>
-                    <select className="form-control" id="type" onChange={(e) => setForm({...form, type: e.target.value})}>
+                    <select className="form-control" id="type" onChange={(e) => setForm({ ...form, type: e.target.value })}>
                       <option value="type1">Indoor Plant</option>
                       <option value="type2">Outdoor Plant</option>
                       <option value="type3">Other</option>

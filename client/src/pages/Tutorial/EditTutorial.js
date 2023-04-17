@@ -48,6 +48,11 @@ const EditTutorial = () => {
     });
   });
 
+  plantOptions.push({
+    value: "link",
+    label: "Add Plant",
+  });
+
   const submitHandler = () => {
     if (file !== null) {
       const formData = new FormData();
@@ -116,7 +121,11 @@ const EditTutorial = () => {
               value={{ value: form.plantId, label: form.plantName }}
               options={plantOptions}
               onChange={(e) => {
-                setForm({ ...form, plantId: +e.value, plantName: e.label });
+                if (e.value === "link") {
+                  navigation("/plants/add");
+                } else {
+                  setForm({ ...form, plantId: +e.value, plantName: e.label });
+                }
               }}
             />
           </div>
