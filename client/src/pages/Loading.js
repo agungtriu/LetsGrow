@@ -3,7 +3,9 @@ import React from 'react';
 const Loading = () => {
   return (
     <>
-      <h2 className="position-absolute top-50 start-50 translate-middle">Loading</h2>
+    <div className='container'>
+      <h4 className='position-absolute top-50 start-50 translate-middle'>Loading...</h4>
+    </div>
     </>
   );
 };

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FiLogOut, FiUser } from "react-icons/fi";
 import { imageUrl } from "../config/config";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
 
 const BarMenu = (props) => {
   const { loginStatus, loginCbHandler } = props;
@@ -18,22 +17,11 @@ const BarMenu = (props) => {
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <motion.h6
+            <h6
               className="text"
-              animate={{
-                scale: [1, 1, 1, 1, 1],
-                rotate: [0, 0, 5, -5, 0],
-              }}
-              transition={{
-                duration: 2,
-                ease: "easeInOut",
-                times: [0, 0.2, 0.5, 0.8, 1],
-                repeat: Infinity,
-                repeatDelay: 2
-              }}
             >
               🌱LetsGrow 
-            </motion.h6>
+            </h6>
           </Link>
 
           <button

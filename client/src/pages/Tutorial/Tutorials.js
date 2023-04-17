@@ -49,11 +49,10 @@ const Tutorials = () => {
                     className="card h-100"
                     whileHover={{ scale: 1.1 }}
                   >
-                    <motion.img
+                    <img
                       className="card-img-top"
                       src={`${imageUrl}${tutorial.image}`}
                       alt={tutorial.image}
-                      whileHover={{ scale: 0.9 }}
                     />
                     <div className="card-body">
                       <h6 className="card-title">
