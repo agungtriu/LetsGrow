@@ -32,7 +32,7 @@ const BarMenu = (props) => {
                 repeatDelay: 2
               }}
             >
-              LetsGrow 🌱
+              🌱LetsGrow 
             </motion.h6>
           </Link>
 

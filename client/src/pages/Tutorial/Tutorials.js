@@ -25,22 +25,13 @@ const Tutorials = () => {
   );
   const paginate = (num) => setCurrentPage(num);
 
-  const variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
 
   return (
     <>
       <div className="container mt-2 mb-2">
-        <motion.div
+        <div
           className="row row-cols-2 row-cols-md-3 g-4"
           key={tutorials.id}
-          animate={{ x: [null, 100, 0] }}
-          transition={{ ease: "easeOut", duration: 2 }}
-          variants={{
-            visible: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } },
-          }}
         >
           {currentTutorials.length > 0 ? (
             currentTutorials.map((tutorial) => {
@@ -52,8 +43,7 @@ const Tutorials = () => {
                 <motion.div
                   onClick={() => clickHandler(tutorial.id)}
                   className="col"
-                  variants={variants}
-                  key={tutorial.id}
+                  whileHover={{ scale: 1.1 }}
                 >
                   <motion.div
                     className="card h-100"
@@ -63,40 +53,38 @@ const Tutorials = () => {
                       className="card-img-top"
                       src={`${imageUrl}${tutorial.image}`}
                       alt={tutorial.image}
-                      initial={{ opacity: 1 }}
-                      animate={{ y: [null, 100, 0] }}
-                      transition={{ duration: 1 }}
+                      whileHover={{ scale: 0.9 }}
                     />
                     <div className="card-body">
-                      <motion.h6 className="card-title" variants={variants}>
+                      <h6 className="card-title">
                         {tutorial.name}
-                      </motion.h6>
-                      <motion.p className="card-text" variants={variants}>
+                      </h6>
+                      <p className="card-text">
                         {truncatedDesc}
-                      </motion.p>
+                      </p>
                     </div>
                   </motion.div>
                 </motion.div>
               );
             })
           ) : (
-            <Loading/>
+            <Loading />
           )}
-        </motion.div>
-        <div className=" d-flex justify-content-center">
+        </div >
+        <div className=" d-flex justify-content-center my-2">
           <nav aria-label="Page navigation example">
-            <motion.ul 
-            className="pagination"
-            whileHover={{ scale: 1.2}}
+            <motion.ul
+              className="pagination"
+              whileHover={{ scale: 1.2 }}
             >
               {
                 Array.from({ length: Math.ceil(tutorials.length / tutorialPerPage) }, (_, index) => {
                   const pageNumber = index + 1
                   return (
                     <>
-                      <li key={pageNumber} className="page-item"><button 
-                      onClick={() => paginate(pageNumber)} 
-                      className="page-link">{pageNumber}</button></li>
+                      <li key={pageNumber} className="page-item"><button
+                        onClick={() => paginate(pageNumber)}
+                        className="page-link">{pageNumber}</button></li>
                     </>
                   )
                 })
@@ -104,7 +92,7 @@ const Tutorials = () => {
             </motion.ul>
           </nav>
         </div>
-      </div>
+      </div >
     </>
   );
 };
