@@ -5,7 +5,7 @@ import { imageUrl } from "../../config/config";
 import { getUserById } from "../../axios/userAxios";
 import { AiFillDelete } from "react-icons/ai";
 import { deleteComment } from "../../axios/commentAxios";
-import timeSince from "../../halper/timeSince";
+import { timeSince } from "../../helpers/timeSince";
 
 const Comment = (props) => {
   const [data, setData] = useState({

@@ -25,7 +25,7 @@ const getPlants = async (cb) => {
   }
 };
 
-const getPlantsById = async (id, cb) => {
+const getPlantById = async (id, cb) => {
   try {
     let plants = await axios({
       method: "GET",
@@ -45,17 +45,20 @@ const getPlantsById = async (id, cb) => {
   }
 };
 
-const addPlants = async (plant) => {
+const addPlant = async (plant, cb) => {
   try {
     let plants = await axios({
       method: "POST",
       url: URL + "add",
       data: plant,
       headers: {
+        "Content-Type": "multipart/form-data",
         access_token: localStorage.access_token,
       },
-    });
-    console.log(plants.data.data);
+    })
+    cb(true)
+    Swal.fire("Add Plants", plants.data.message, "success");
+
   } catch (err) {
     if (err.response.status === 500) {
       Swal.fire(
@@ -67,50 +70,24 @@ const addPlants = async (plant) => {
       Swal.fire("Error!", err.response.data.message, "error");
     }
   }
-};
+}
 
-const editPlants = async (id, plant) => {
+const editPlant = async (id, plant) => {
   try {
     let plants = await axios({
       method: "PUT",
       url: URL + "edit/" + id,
       data: plant,
-    });
-    Swal.fire("Edit plants" + id, "Item" + id + " has been updated", "success");
-    console.log(plants.data.data);
-  } catch (err) {
-    if (err.response.status === 500) {
-      Swal.fire(
-        "Error!",
-        err.response.data.error.errors[0].original.validatorArgs[0].message,
-        "error"
-      );
-    } else {
-      Swal.fire("Error!", err.response.data.message, "error");
-    }
-  }
-};
-
-const deletePlant = async (id) => {
-  try {
-    let plants = await axios({
-      method: "GET",
-      url: URL + "delete/" + id,
-    });
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      headers: {
+        "Content-Type": "multipart/form-data",
+        access_token: localStorage.access_token,
       }
-    });
-    console.log(plants.data.data);
+    })
+    Swal.fire(
+      'Edit plants' + id,
+      plants.data.message,
+      'success'
+    )
   } catch (err) {
     if (err.response.status === 500) {
       Swal.fire(
@@ -124,4 +101,51 @@ const deletePlant = async (id) => {
   }
 };
 
-export { getPlants, addPlants, editPlants, deletePlant, getPlantsById };
+const deletePlant = async (id, cb) => {
+  try {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let plants = await axios({
+          method: "GET",
+          url: URL + "delete/" + id,
+          headers: {
+            access_token: localStorage.access_token,
+          }
+        })
+        cb(true)
+        Swal.fire(
+          'Deleted!',
+          `${plants.data.message}`,
+          'success'
+        )
+      }
+    })
+  } catch (err) {
+
+    if (err.response.status === 500) {
+      Swal.fire(
+        "Error!",
+        err.response.data.error.errors[0].original.validatorArgs[0].message,
+        "error"
+      );
+    } else {
+      Swal.fire("Error!", err.response.data.message, "error");
+    }
+  }
+};
+
+export {
+  getPlants,
+  addPlant,
+  editPlant,
+  deletePlant,
+  getPlantById
+};

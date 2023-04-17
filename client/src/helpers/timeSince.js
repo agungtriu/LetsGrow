@@ -26,4 +26,9 @@ const timeSince = (stringDate) => {
   return Math.floor(seconds) + " seconds";
 };
 
-module.exports = timeSince;
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  return new Intl.DateTimeFormat('en-GB', options).format(new Date(dateString))
+}
+
+module.exports = {timeSince, formatDate}

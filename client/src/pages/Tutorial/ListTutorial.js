@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
 import { imageUrl } from "../../config/config";
+import { motion } from "framer-motion";
 
 const ListTutorial = (props) => {
   const navigation = useNavigate();
@@ -18,7 +19,7 @@ const ListTutorial = (props) => {
         </Link>
       </div>
       <div className="mt-3 mb-3">
-        <div className="row">
+        <motion.div className="row row-cols-1 row-cols-md-3 g-4" drag="x" dragConstraints={{ left: -1000, right: 1000 }} dragElastic={0.5}>
           {props.tutorials.length > 0 ? (
             props.tutorials.map((tutorial) => {
               const truncatedDesc =
@@ -26,30 +27,34 @@ const ListTutorial = (props) => {
                   ? tutorial.description.substring(0, 100) + "..."
                   : tutorial.description;
               return (
-                <div
+                <motion.div
                   onClick={() => clickHandler(tutorial.id)}
-                  className="col-md-4 mb-4"
-                  style={{ width: "20%" }}
+                  className="col mb-4"
                   key={tutorial.id}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <div className="card">
-                    <img
-                      className="card-img-top"
+                  <div className="card h-100 border-0">
+                    <motion.img
+                      className="card-img-top h-75"
                       src={`${imageUrl}${tutorial.image}`}
                       alt={tutorial.image}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8 }}
                     />
                     <div className="card-body">
-                      <h6>{tutorial.name}</h6>
-                      <small>{truncatedDesc}</small>
+                      <h6 className="card-title">{tutorial.name}</h6>
+                      <p className="card-text">{truncatedDesc}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })
           ) : (
             <Loading></Loading>
           )}
-        </div>
+        </motion.div>
       </div>
     </>
   );

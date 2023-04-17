@@ -8,9 +8,9 @@ const HomePage = () => {
       <div id="page-container">
         <div id="content-wrap">
           <Tutorials></Tutorials>
-        </div>
-        <div id="footer">
-          <Information></Information>
+          <div id="footer">
+            <Information></Information>
+          </div>
         </div>
       </div>
     </>

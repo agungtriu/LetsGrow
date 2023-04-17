@@ -6,6 +6,7 @@
 
 body {
   font-family: "Josefin Sans", sans-serif;
+  background-image: url('./images/Background.jpg');
 }
 .background-color {
   background-color: rgb(255, 255, 255);
@@ -46,3 +47,63 @@ body {
   width: 100%;
   height: 2.5rem; /* Footer height */
 }
+
+.container-img {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  margin: 100px auto;
+  justify-content: center;
+}
+
+.box {
+  width: 500px;
+  margin: 0 10px;
+  box-shadow: 0 0 20px rgba(29, 28, 28, 0.6);
+  transition: 1s;
+  
+}
+
+.box img {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.box:hover{
+  transform: scale(1.3);
+  z-index: 2;
+}
+
+.loading-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: transparent;
+}
+
+.loading-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loading-line div {
+  width: 100px;
+  height: 5px;
+  background-color: black;
+}
+
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(16, 3, 3);
+  
+}
+
+

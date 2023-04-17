@@ -36,6 +36,7 @@ const Tutorial = () => {
         steps: result.steps,
         comments: result.comments,
         userId: result.userId,
+        plantName: result.plantName
       });
       setComment({
         ...comment,
@@ -69,18 +70,24 @@ const Tutorial = () => {
     getTutorial();
   }, [location.key]);
 
+
   return (
     <>
       <div className="container">
-        <div className="card mx-auto mt-3" style={{ width: "30%" }}>
-          <img
-            src={imageUrl + tutorial.image}
-            className="card-img "
-            alt={tutorial.image}
-          />
+        <div className="mx-auto" style={{ width: "40%" }}>
+          <div className="container-img">
+            <div className="box">
+              <img
+                src={imageUrl + tutorial.image}
+                className="card-img "
+                alt={tutorial.image}
+              />
+            </div>
+          </div>
         </div>
         <div className="mt-3 position-relative">
           <h5 className="text-center mt-3">{tutorial.name}</h5>
+          <h6 className="text-center"> {tutorial.plantName}</h6>
           <p className="m-3">{tutorial.description}</p>
 
           {+tutorial.userId === +localStorage.id ? (
