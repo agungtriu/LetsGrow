@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <div>
-        <BarMenu
+        <BarMenu 
           loginStatus={loginStatus}
           loginCbHandler={loginCbHandler}
         ></BarMenu>

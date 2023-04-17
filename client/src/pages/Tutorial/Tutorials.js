@@ -35,6 +35,7 @@ const Tutorials = () => {
       <div className="container mt-2 mb-2">
         <motion.div
           className="row row-cols-2 row-cols-md-3 g-4"
+          key={tutorials.id}
           animate={{ x: [null, 100, 0] }}
           transition={{ ease: "easeOut", duration: 2 }}
           variants={{
@@ -51,8 +52,8 @@ const Tutorials = () => {
                 <motion.div
                   onClick={() => clickHandler(tutorial.id)}
                   className="col"
-                  key={tutorial.id}
                   variants={variants}
+                  key={tutorial.id}
                 >
                   <motion.div
                     className="card h-100"
@@ -79,7 +80,7 @@ const Tutorials = () => {
               );
             })
           ) : (
-            <Loading />
+            <Loading/>
           )}
         </motion.div>
         <div className=" d-flex justify-content-center">
@@ -93,9 +94,9 @@ const Tutorials = () => {
                   const pageNumber = index + 1
                   return (
                     <>
-                      {/* <li className="page-item"><a className="page-link">Previous</a></li> */}
-                      <li key={pageNumber} className="page-item"><button onClick={() => paginate(pageNumber)} className="page-link">{pageNumber}</button></li>
-                      {/* <li className="page-item" href=''><a className="page-link">Next</a></li> */}
+                      <li key={pageNumber} className="page-item"><button 
+                      onClick={() => paginate(pageNumber)} 
+                      className="page-link">{pageNumber}</button></li>
                     </>
                   )
                 })

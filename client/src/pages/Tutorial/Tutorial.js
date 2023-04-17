@@ -66,7 +66,6 @@ const Tutorial = () => {
     });
   };
 
-  console.log(tutorial)
   useEffect(() => {
     getTutorial();
   }, [location.key]);

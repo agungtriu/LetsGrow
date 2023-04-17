@@ -51,7 +51,7 @@ const Steps = (props) => {
                       <img
                         src={imageUrl + step.image}
                         className="img-fluid rounded-start"
-                        alt="img"
+                        alt={step.image}
                       />
                     </div>
                     <div className="col-md-8">

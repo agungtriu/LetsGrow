@@ -101,16 +101,8 @@ const editPlant = async (id, plant) => {
   }
 };
 
-const deletePlant = async (id,cb) => {
+const deletePlant = async (id, cb) => {
   try {
-    let plants = await axios({
-      method: "GET",
-      url: URL + "delete/" + id,
-      headers: {
-        access_token: localStorage.access_token,
-      }
-    })
-    cb(true)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -119,17 +111,23 @@ const deletePlant = async (id,cb) => {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        let plants = await axios({
+          method: "GET",
+          url: URL + "delete/" + id,
+          headers: {
+            access_token: localStorage.access_token,
+          }
+        })
+        cb(true)
         Swal.fire(
           'Deleted!',
-          'Your file has been deleted.',
+          `Your ${plants.data.message} been deleted.`,
           'success'
         )
       }
     })
-    console.log(plants.data.data)
-
   } catch (err) {
 
     if (err.response.status === 500) {
