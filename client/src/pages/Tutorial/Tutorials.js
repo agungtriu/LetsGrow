@@ -52,11 +52,14 @@ const Tutorials = () => {
                 <motion.div
                   onClick={() => clickHandler(tutorial.id)}
                   className="col"
-                  whileHover={{ scale: 1 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <motion.div
                     className="card h-100"
-                    whileHover={{ scale: 1.01 }}
+                    initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8 }}
                   >
                     <img
                       className="card-img-top"
